@@ -20,4 +20,20 @@
     <string name="tab_title_matches">Matches</string>
     <string name="tab_title_groups">Groups</string>
     <string name="tab_title_favorites">Favorites</string>
+
+    <!-- Match states -->
+    <string name="NOT_STARTED">No iniciado</string>
+    <string name="IN_PLAY">iniciado</string>
+    <string name="HALF_TIME_BREAK">Medio tiempo</string>
+    <string name="ADDED_TIME">Tiempo de adicion</string>
+    <string name="FINISHED">Finalizado</string>
+    <string name="INSUFFICIENT_DATA">Datos insuficientes</string>
+
+    <!-- ID Groups -->
+    <string name="groupA">962</string>
+    <string name="groupB">961</string>
+    <string name="groupC">960</string>
+    <string name="id_match">idMatch</string>
+
+
 </resources>

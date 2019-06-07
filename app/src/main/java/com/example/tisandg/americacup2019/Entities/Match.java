@@ -13,25 +13,26 @@ public class Match {
 
     private int match_teamA;
     private int match_teamB;
-    private int match_goalsA;
-    private int match_goalsB;
+    private String teamA;
+    private String teamB;
+    private String score;
+    private String status;
     private String match_date;
     private String match_hour;
     private String match_stadium;
-    private boolean match_finalized;
     private int group_id;
 
-    public Match(int match_id, int match_teamA, int match_teamB, int match_goalsA, int match_goalsB, String match_date, String match_hour, String match_stadium, boolean match_finalized, int group_id) {
+    public Match(int match_id, int match_teamA, String teamA, int match_teamB, String teamB,
+                 String match_date, String match_hour, String match_stadium, int group_id) {
         this.match_id = match_id;
         this.match_teamA = match_teamA;
         this.match_teamB = match_teamB;
-        this.match_goalsA = match_goalsA;
-        this.match_goalsB = match_goalsB;
         this.match_date = match_date;
         this.match_hour = match_hour;
         this.match_stadium = match_stadium;
-        this.match_finalized = match_finalized;
         this.group_id = group_id;
+        this.teamA = teamA;
+        this.teamB = teamB;
     }
 
     public int getMatch_id() {
@@ -56,22 +57,6 @@ public class Match {
 
     public void setMatch_teamB(int match_teamB) {
         this.match_teamB = match_teamB;
-    }
-
-    public int getMatch_goalsA() {
-        return match_goalsA;
-    }
-
-    public void setMatch_goalsA(int match_goalsA) {
-        this.match_goalsA = match_goalsA;
-    }
-
-    public int getMatch_goalsB() {
-        return match_goalsB;
-    }
-
-    public void setMatch_goalsB(int match_goalsB) {
-        this.match_goalsB = match_goalsB;
     }
 
     public String getMatch_date() {
@@ -106,11 +91,35 @@ public class Match {
         this.match_stadium = match_stadium;
     }
 
-    public boolean isMatch_finalized() {
-        return match_finalized;
+    public String getTeamA() {
+        return teamA;
     }
 
-    public void setMatch_finalized(boolean match_finalized) {
-        this.match_finalized = match_finalized;
+    public void setTeamA(String teamA) {
+        this.teamA = teamA;
+    }
+
+    public String getTeamB() {
+        return teamB;
+    }
+
+    public void setTeamB(String teamB) {
+        this.teamB = teamB;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

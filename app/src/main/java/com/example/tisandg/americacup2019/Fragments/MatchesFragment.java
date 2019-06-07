@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +21,16 @@ import com.example.tisandg.americacup2019.Recycler.AdapterRecycler;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MatchesFragment extends Fragment implements View.OnClickListener{
 
-    AdapterRecycler adaptador;
+    AdapterRecycler adapter;
     RecyclerView mRecyclerView;
     List<Match> listData;
     ComunicationToActivity callback;
+    private String TAG = "MatchesFragment";
 
     public MatchesFragment() {
         // Required empty public constructor
@@ -56,7 +57,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
             int position = viewHolder.getAdapterPosition();
             Match thisItem = listData.get(position);
-            callback.watchMath(position);
+            callback.watchMath(thisItem.getMatch_id());
         }
     };
 
@@ -75,7 +76,9 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         mRecyclerView = view.findViewById(R.id.recyclerView_matches);
 
         //listData = fillMatches();
-        adaptador = new AdapterRecycler(getActivity(),listData);
+        adapter = new AdapterRecycler(getActivity(),listData);
+
+        getMatchs();
 
         return view;
     }
@@ -83,30 +86,31 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adaptador.setOnItemClickListener(onItemClickListener);
+        adapter.setOnItemClickListener(onItemClickListener);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(adaptador);
+        mRecyclerView.setAdapter(adapter);
     }
 
-    private void getMatchs() {
+    public void getMatchs() {
         class GetMatchs extends AsyncTask<Void, Void, List<Match>> {
 
             @Override
             protected List<Match> doInBackground(Void... voids) {
                 List<Match> matches = DatabaseAmericaCupAccesor
                         .getInstance(getActivity().getApplication()).matchDAO().loadAll();
+                Log.d(TAG,"Numero matches en fragment: "+matches.size());
                 return matches;
             }
 
             @Override
             protected void onPostExecute(List<Match> matches) {
                 super.onPostExecute(matches);
+                Log.d(TAG,"Actualizando adaptador");
                 listData.clear();
-                for (int i = 0; i < matches.size(); i++) {
-                    listData.add(matches.get(i));
-                }
-                adaptador.notifyDataSetChanged();
+                listData = matches;
+                adapter.setListMatches(listData);
+                adapter.notifyDataSetChanged();
             }
         }
         GetMatchs getMatchs = new GetMatchs();
@@ -114,8 +118,15 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    public void update(){
+        Log.d(TAG,"Actualizando fragment");
+        getMatchs();
+    }
+
     @Override
     public void onClick(View v) {
         //Intent goTo
     }
 }
+
+

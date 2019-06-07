@@ -5,12 +5,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.tisandg.americacup2019.Fragments.MatchesFragment;
+
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> listFragments;
-
 
     public ViewPagerAdapter(List<Fragment> listFragment, FragmentManager fm){
         super(fm);
@@ -24,6 +25,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
+    @Override
     public Fragment getItem(int i) {
         return listFragments.get(i);
     }
@@ -31,5 +37,21 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return listFragments.size();
+    }
+
+    public void updateFragment(int posicion )
+    {
+        switch (posicion)
+        {
+            case 0:
+                ((MatchesFragment)listFragments.get(posicion)).update();
+                break;
+            case 1:
+                //((ListGroupsFragment)listFragments.get(fragment).updateMatches();
+                break;
+            case 2:
+                //((FavoritesFragment)listFragments.get(fragment).updateMatches();
+                break;
+        }
     }
 }

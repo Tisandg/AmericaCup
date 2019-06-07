@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,6 +43,13 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
     private RequestQueue cola;
     private ArrayList<Match> matches;
 
+    private ViewPagerAdapter VPAdapter;
+    private final int numberGroups = 3;
+    private boolean agregadosA= false, agregadosB = false, agregadosC = false;
+
+    //Fragments
+    private MatchesFragment matchesFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,29 +60,32 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
 
         matches = new ArrayList<Match>();
 
-        FixturesGroupA();
-        FixturesGroupB();
-        FixturesGroupC();
+        FixturesGroup(getString(R.string.groupA), 1);
+        FixturesGroup(getString(R.string.groupB), 2);
+        FixturesGroup(getString(R.string.groupC), 3);
 
         //Fragments for tabs
         List<Fragment> fragments = new ArrayList<Fragment>();
-        if(savedInstanceState==null) {
-            MatchesFragment matches = new MatchesFragment();
-            //Send the reference of this activity because this implement the interface
-            matches.setCallback(this);
-            ListGroupsFragment groups = new ListGroupsFragment();
-            FavoritesFragment favorites = new FavoritesFragment();
-            fragments.add(matches);
-            fragments.add(groups);
-            fragments.add(favorites);
+        //if(savedInstanceState==null) {
+        matchesFragment = new MatchesFragment();
+        //Send the reference of this activity because this implement the interface
+        matchesFragment.setCallback(this);
+        ListGroupsFragment groups = new ListGroupsFragment();
+        FavoritesFragment favorites = new FavoritesFragment();
+        fragments.add(matchesFragment);
+        fragments.add(groups);
+        fragments.add(favorites);
 
-            ViewPagerAdapter VPAdapter = new ViewPagerAdapter(fragments, getSupportFragmentManager());
-            ViewPager viewPager = findViewById(R.id.view_pager);
-            viewPager.setAdapter(VPAdapter);
-            TabLayout tabs = findViewById(R.id.tabs);
-            tabs.setupWithViewPager(viewPager);
-        }
 
+        VPAdapter = new ViewPagerAdapter(fragments, getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(VPAdapter);
+
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+
+        Log.d(TAG,"Fragment[0]: "+VPAdapter.getItem(0).toString());
+        Log.d(TAG,"Fragment[1]: "+VPAdapter.getItem(1).toString());
     }
 
     //Prepare the menu before display
@@ -113,19 +122,27 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
 
     /**
      * Watch the MatchDAO which the user have choosed
-     * @param id
+     * @param idMatch
      */
     @Override
-    public void watchMath(int id) {
+    public void watchMath(int idMatch) {
         Intent goToMatchActivty = new Intent(MainActivity.this, MatchActivity.class);
+        goToMatchActivty.putExtra(getString(R.string.id_match),idMatch);
         startActivity(goToMatchActivty);
     }
 
+    /**
+     * To obtain fixtures of a group
+     * League 962 for group A
+     * League 961 for group B
+     * League 960 for group C
+     * @param league
+     * @param idGroup
+     */
     //Horario adelantado 6 horas
-
-    public void FixturesGroupA(){
+    public void FixturesGroup(String league,final int idGroup){
         String URLFixturesA = "https://livescore-api.com/api-client/fixtures/matches.json?key="+
-                getString(R.string.api_key)+"&secret="+getString(R.string.api_secret)+"&league=962";
+                getString(R.string.api_key)+"&secret="+getString(R.string.api_secret)+"&league="+league;
         //Preparamos la peticion
         JsonObjectRequest peticion = new JsonObjectRequest(Request.Method.GET, URLFixturesA,null,  new Response.Listener<JSONObject>(){
             @Override
@@ -133,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                 try {
                     ArrayList<Match> matchesGroup = new ArrayList<>();
                     JSONObject objData = response.getJSONObject("data");
+
                     //get Fixtures
                     JSONArray fixtures = objData.getJSONArray("fixtures");
                     int numFixtures = fixtures.length();
@@ -146,13 +164,36 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                         String date = fixture.getString("date");
                         String time = fixture.getString("time");
                         String teamA = fixture.getString("home_name");
+                        String score="", status="";
+                        try{
+                            score = fixture.getString("score");
+                            status = fixture.getString("status");
+                        }catch (JSONException e){
+                            Log.d(TAG,"Excepcion al obtener score y status");
+                        }
+
                         int teamAid = fixture.getInt("home_id");
                         String teamB = fixture.getString("away_name");
                         int teamBid = fixture.getInt("away_id");
                         String location = fixture.getString("location");
+                        Match match = new Match(id, teamAid, teamA, teamBid, teamB, date, time, location, idGroup);
 
-                        Match match = new Match(id, teamAid, teamBid, 0, 0, date, time, location, false, 1);
+                        match.setScore("");
+                        if(status.equals("")) { match.setStatus(getString(R.string.NOT_STARTED)); }
+                        else{  match.setStatus(status); }
+
                         matchesGroup.add(match);
+                    }
+                    switch (idGroup){
+                        case 1:
+                            agregadosA = true;
+                            break;
+                        case 2:
+                            agregadosB = true;
+                            break;
+                        case 3:
+                            agregadosC = true;
+                            break;
                     }
                     //Register in BD
                     saveMatches(matchesGroup);
@@ -186,108 +227,15 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Toast.makeText(MainActivity.this, "Matches saved!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Matches saved: "+matchesGroup.size());
+                if(agregadosA && agregadosB && agregadosC){
+                    VPAdapter.updateFragment(0);
+                }
+
             }
         }
-
         SaveMatches save = new SaveMatches();
         save.execute();
     }
 
-    public void FixturesGroupB(){
-        String URLFixturesA = "https://livescore-api.com/api-client/fixtures/matches.json?key="+
-                getString(R.string.api_key)+"&secret="+getString(R.string.api_secret)+"&league=961";
-        //Preparamos la peticion
-        JsonObjectRequest peticion = new JsonObjectRequest(Request.Method.GET, URLFixturesA,null,  new Response.Listener<JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response){
-                try {
-                    ArrayList<Match> matchesGroup = new ArrayList<>();
-                    JSONObject objData = response.getJSONObject("data");
-                    //get Fixtures
-                    JSONArray fixtures = objData.getJSONArray("fixtures");
-                    int numFixtures = fixtures.length();
-                    int i = 0;
-                    for(i = 0; i<numFixtures; i++){
-                        Log.d(TAG,fixtures.get(i).toString());
-                        JSONObject fixture = (JSONObject) fixtures.get(i);
-
-                        //Obtain data from fixture
-                        int id = fixture.getInt("id");
-                        String date = fixture.getString("date");
-                        String time = fixture.getString("time");
-                        String teamA = fixture.getString("home_name");
-                        int teamAid = fixture.getInt("home_id");
-                        String teamB = fixture.getString("away_name");
-                        int teamBid = fixture.getInt("away_id");
-                        String location = fixture.getString("location");
-
-                        Match match = new Match(id, teamAid, teamBid, 0, 0, date, time, location, false, 1);
-                        matchesGroup.add(match);
-                    }
-                    saveMatches(matchesGroup);
-                } catch (JSONException e) {
-                    Log.d(TAG,"Excepcion: "+e.getMessage());
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //Error
-                Log. d(TAG, "Error al realizar peticion: "+error.getMessage());
-            }
-        });
-        cola.add(peticion);
-    }
-
-
-    public void FixturesGroupC(){
-        String URLFixturesA = "https://livescore-api.com/api-client/fixtures/matches.json?key="+
-                getString(R.string.api_key)+"&secret="+getString(R.string.api_secret)+"&league=960";
-        //Preparamos la peticion
-        JsonObjectRequest peticion = new JsonObjectRequest(Request.Method.GET, URLFixturesA,null,  new Response.Listener<JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response){
-                try {
-                    ArrayList<Match> matchesGroup = new ArrayList<>();
-                    JSONObject objData = response.getJSONObject("data");
-                    //get Fixtures
-                    JSONArray fixtures = objData.getJSONArray("fixtures");
-                    int numFixtures = fixtures.length();
-                    int i = 0;
-                    for(i = 0; i<numFixtures; i++){
-                        Log.d(TAG,fixtures.get(i).toString());
-                        JSONObject fixture = (JSONObject) fixtures.get(i);
-
-                        //Obtain data from fixture
-                        int id = fixture.getInt("id");
-                        String date = fixture.getString("date");
-                        String time = fixture.getString("time");
-                        String teamA = fixture.getString("home_name");
-                        int teamAid = fixture.getInt("home_id");
-                        String teamB = fixture.getString("away_name");
-                        int teamBid = fixture.getInt("away_id");
-                        String location = fixture.getString("location");
-
-                        Match match = new Match(id, teamAid, teamBid, 0, 0, date, time, location, false, 1);
-                        matchesGroup.add(match);
-                    }
-                    saveMatches(matchesGroup);
-                } catch (JSONException e) {
-                    Log.d(TAG,"Excepcion: "+e.getMessage());
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //Error
-                Log. d(TAG, "Error al realizar peticion: "+error.getMessage());
-            }
-        });
-        cola.add(peticion);
-    }
 }

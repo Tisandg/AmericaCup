@@ -39,10 +39,10 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
 
     @Override
     public void onBindViewHolder(@NonNull AdapterRecycler.ItemViewHolder view, int i) {
-        /*view.nameTeamB.setText(listMatches.get(i).getTeamA());
+        view.nameTeamB.setText(listMatches.get(i).getTeamA());
         view.nameTeamA.setText(listMatches.get(i).getTeamB());
-        view.goalsA.setText(String.valueOf(listMatches.get(i).getGoalsA()));
-        view.goalsB.setText(String.valueOf(listMatches.get(i).getGoalsB()) );*/
+        view.score.setText(listMatches.get(i).getScore());
+        view.status.setText(listMatches.get(i).getStatus());
     }
 
     @Override
@@ -52,17 +52,25 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTeamA, nameTeamB, goalsA, goalsB;
+        TextView nameTeamA, nameTeamB, score, status;
 
         public ItemViewHolder(@NonNull View view) {
             super(view);
             nameTeamA = view.findViewById(R.id.nameA);
             nameTeamB = view.findViewById(R.id.nameB);
-            goalsA = view.findViewById(R.id.goalsA);
-            goalsB = view.findViewById(R.id.goalsB);
+            score = view.findViewById(R.id.score);
+            status = view.findViewById(R.id.status);
             itemView.setTag(this);
             itemView.setOnClickListener(mOnItemClickListener);
         }
+    }
+
+    public List<Match> getListMatches() {
+        return listMatches;
+    }
+
+    public void setListMatches(List<Match> listMatches) {
+        this.listMatches = listMatches;
     }
 }
 

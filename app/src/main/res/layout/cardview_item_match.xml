@@ -10,61 +10,78 @@
 
     <LinearLayout
         android:orientation="horizontal"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_weight="4"
+            android:gravity="right|center"
             android:layout_height="match_parent">
-
-            <ImageView
-                android:background="@drawable/shield"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-
-            <TextView
-                android:id="@+id/goalsA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="goals A"/>
 
             <TextView
                 android:id="@+id/nameA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="team A"/>
+                android:gravity="center"
+                android:text="team A" />
+
+            <ImageView
+                android:background="@drawable/shield"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+        </LinearLayout>
 
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="status"/>
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="x - x"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_weight="4"
+            android:gravity="left|center"
+            android:orientation="horizontal"
             android:layout_height="match_parent">
 
             <ImageView
                 android:background="@drawable/shield"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
-
-            <TextView
-                android:id="@+id/goalsB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="goals B"/>
 
             <TextView
                 android:id="@+id/nameB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="team B"/>
 
         </LinearLayout>

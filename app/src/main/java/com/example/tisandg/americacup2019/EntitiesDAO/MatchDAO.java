@@ -26,6 +26,9 @@ public interface MatchDAO {
     @Delete
     public void delete(Match item);
 
-    @Query("SELECT * FROM Match ORDER BY match_id DESC")
+    @Query("SELECT * FROM Match ORDER BY match_date ASC")
     public List<Match> loadAll();
+
+    @Query("SELECT * FROM Match WHERE match_id = :id")
+    public Match findById(int id);
 }
