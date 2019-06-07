@@ -30,8 +30,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity implements MatchesFragment.ComunicationToActivity {
 
@@ -156,14 +161,36 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                     int numFixtures = fixtures.length();
                     int i = 0;
                     for(i = 0; i<numFixtures; i++){
-                        Log.d(TAG,fixtures.get(i).toString());
+                        Log.d(TAG,"Respuesta fixture: "+fixtures.get(i).toString());
                         JSONObject fixture = (JSONObject) fixtures.get(i);
 
                         //Obtain data from fixture
                         int id = fixture.getInt("id");
+
                         String date = fixture.getString("date");
                         String time = fixture.getString("time");
+                        //convert to current time zone
+                        DateFormat formatDate;
+                        Date dateConverted = new Date();
+                        String dateConvertida = "";
+                        try {
+                            String dateTime = date+" "+time;
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+                            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                            Date dateAux = sdf.parse(dateTime);
+                            sdf.setTimeZone(TimeZone.getTimeZone("GMT-6"));
+                            dateConvertida = sdf.format(dateAux);
+
+                            SimpleDateFormat formateador = new SimpleDateFormat("EEE, MMM dd");
+                            date = formateador.parse()
+                            //dateConverted = sdf.format(dateTime);
+                        }catch (Exception e){
+                            Log.d(TAG,"Excepcion al convertir date: "+e.getMessage());
+                        }
+
                         String teamA = fixture.getString("home_name");
+                        int teamAid = fixture.getInt("home_id");
+
                         String score="", status="";
                         try{
                             score = fixture.getString("score");
@@ -172,11 +199,10 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                             Log.d(TAG,"Excepcion al obtener score y status");
                         }
 
-                        int teamAid = fixture.getInt("home_id");
                         String teamB = fixture.getString("away_name");
                         int teamBid = fixture.getInt("away_id");
                         String location = fixture.getString("location");
-                        Match match = new Match(id, teamAid, teamA, teamBid, teamB, date, time, location, idGroup);
+                        Match match = new Match(id, teamAid, teamA, teamBid, teamB, dateConvertida, time, location, idGroup);
 
                         match.setScore("");
                         if(status.equals("")) { match.setStatus(getString(R.string.NOT_STARTED)); }

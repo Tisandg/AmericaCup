@@ -115,7 +115,6 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         }
         GetMatchs getMatchs = new GetMatchs();
         getMatchs.execute();
-
     }
 
     public void update(){

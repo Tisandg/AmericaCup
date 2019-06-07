@@ -39,10 +39,12 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
 
     @Override
     public void onBindViewHolder(@NonNull AdapterRecycler.ItemViewHolder view, int i) {
-        view.nameTeamB.setText(listMatches.get(i).getTeamA());
-        view.nameTeamA.setText(listMatches.get(i).getTeamB());
-        view.score.setText(listMatches.get(i).getScore());
-        view.status.setText(listMatches.get(i).getStatus());
+        view.nameTeamA.setText(listMatches.get(i).getTeamA());
+        view.nameTeamB.setText(listMatches.get(i).getTeamB());
+        if(listMatches.get(i).getStatus().equals(context.getString(R.string.NOT_STARTED))){
+            view.score.setText(listMatches.get(i).getMatch_date());
+            view.status.setText(listMatches.get(i).getMatch_hour());
+        }
     }
 
     @Override
