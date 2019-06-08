@@ -2,9 +2,11 @@ package com.example.tisandg.americacup2019.Entities;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
 @Entity
+@TypeConverters(DateConverter .class)
 public class Match {
 
     @NonNull
@@ -17,6 +19,7 @@ public class Match {
     private String teamB;
     private String score;
     private String status;
+    //private Date match_date;
     private String match_date;
     private String match_hour;
     private String match_stadium;

@@ -48,31 +48,36 @@
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="PJ"/>
+                android:gravity="center"
+                android:text="@string/letter_standing_matches"/>
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="PG"/>
+                android:gravity="center"
+                android:text="@string/letter_standing_won"/>
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="PE"/>
+                android:gravity="center"
+                android:text="@string/letter_standing_drawn"/>
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="PP"/>
+                android:gravity="center"
+                android:text="@string/letter_standing_lost"/>
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="PT"/>
+                android:gravity="center"
+                android:text="@string/letter_standing_pts"/>
 
         </TableRow>
 
@@ -92,6 +97,7 @@
 
             <TextView
                 android:id="@+id/pj_team_a"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -99,6 +105,7 @@
 
             <TextView
                 android:id="@+id/pg_team_a"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -106,6 +113,7 @@
 
             <TextView
                 android:id="@+id/pe_team_a"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -113,6 +121,7 @@
 
             <TextView
                 android:id="@+id/pp_team_a"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -120,6 +129,7 @@
 
             <TextView
                 android:id="@+id/pt_team_a"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -143,6 +153,7 @@
 
             <TextView
                 android:id="@+id/pj_team_b"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -150,6 +161,7 @@
 
             <TextView
                 android:id="@+id/pg_team_b"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -157,6 +169,7 @@
 
             <TextView
                 android:id="@+id/pe_team_b"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -164,6 +177,7 @@
 
             <TextView
                 android:id="@+id/pp_team_b"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -171,6 +185,7 @@
 
             <TextView
                 android:id="@+id/pt_team_b"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -194,6 +209,7 @@
 
             <TextView
                 android:id="@+id/pj_team_c"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -201,6 +217,7 @@
 
             <TextView
                 android:id="@+id/pg_team_c"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -208,6 +225,7 @@
 
             <TextView
                 android:id="@+id/pe_team_c"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -215,6 +233,7 @@
 
             <TextView
                 android:id="@+id/pp_team_c"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -222,6 +241,7 @@
 
             <TextView
                 android:id="@+id/pt_team_c"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -245,6 +265,7 @@
 
             <TextView
                 android:id="@+id/pj_team_d"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -252,6 +273,7 @@
 
             <TextView
                 android:id="@+id/pg_team_d"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -259,6 +281,7 @@
 
             <TextView
                 android:id="@+id/pe_team_d"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -266,6 +289,7 @@
 
             <TextView
                 android:id="@+id/pp_team_d"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -273,6 +297,7 @@
 
             <TextView
                 android:id="@+id/pt_team_d"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"

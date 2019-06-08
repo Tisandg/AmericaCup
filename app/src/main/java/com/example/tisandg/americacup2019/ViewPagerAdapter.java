@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.tisandg.americacup2019.Fragments.FavoritesFragment;
+import com.example.tisandg.americacup2019.Fragments.ListGroupsFragment;
 import com.example.tisandg.americacup2019.Fragments.MatchesFragment;
 
 import java.util.List;
@@ -47,10 +49,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 ((MatchesFragment)listFragments.get(posicion)).update();
                 break;
             case 1:
-                //((ListGroupsFragment)listFragments.get(fragment).updateMatches();
+                ((ListGroupsFragment)listFragments.get(posicion)).update();
                 break;
             case 2:
-                //((FavoritesFragment)listFragments.get(fragment).updateMatches();
+                ((FavoritesFragment)listFragments.get(posicion)).update();
                 break;
         }
     }

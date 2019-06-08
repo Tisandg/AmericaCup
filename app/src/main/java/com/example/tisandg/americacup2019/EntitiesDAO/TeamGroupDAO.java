@@ -28,4 +28,7 @@ public interface TeamGroupDAO {
 
     @Query("SELECT * FROM TeamGroup ORDER BY teamGroup_id DESC")
     public List<TeamGroup> loadAll();
+
+    @Query("SELECT * FROM TeamGroup WHERE teamGroup_id = :id")
+    public List<TeamGroup> findByGroup(int id);
 }

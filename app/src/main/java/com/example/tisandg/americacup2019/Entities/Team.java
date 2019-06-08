@@ -12,13 +12,11 @@ public class Team {
     private int team_id;
 
     private String team_name;
-    private String team_image;
     private int group_id;
 
-    public Team(int team_id, String team_name, String team_image, int group_id) {
+    public Team(int team_id, String team_name, int group_id) {
         this.team_id = team_id;
         this.team_name = team_name;
-        this.team_image = team_image;
         this.group_id = group_id;
     }
 
@@ -36,14 +34,6 @@ public class Team {
 
     public void setTeam_name(String team_name) {
         this.team_name = team_name;
-    }
-
-    public String getTeam_image() {
-        return team_image;
-    }
-
-    public void setTeam_image(String team_image) {
-        this.team_image = team_image;
     }
 
     public int getGroup_id() {

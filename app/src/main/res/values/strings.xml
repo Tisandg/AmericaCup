@@ -34,6 +34,13 @@
     <string name="groupB">961</string>
     <string name="groupC">960</string>
     <string name="id_match">idMatch</string>
+    <string name="shared_preferences_teams">dataTeams</string>
+    <string name="shared_preferences_teams_saved">teamSaved</string>
+    <string name="letter_standing_matches">M</string>
+    <string name="letter_standing_won">W</string>
+    <string name="letter_standing_drawn">D</string>
+    <string name="letter_standing_lost">L</string>
+    <string name="letter_standing_pts">Pts</string>
 
 
 </resources>

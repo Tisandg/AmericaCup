@@ -106,7 +106,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
             @Override
             protected void onPostExecute(List<Match> matches) {
                 super.onPostExecute(matches);
-                Log.d(TAG,"Actualizando adaptador");
+                Log.d(TAG,"Actualizando adapter");
                 listData.clear();
                 listData = matches;
                 adapter.setListMatches(listData);

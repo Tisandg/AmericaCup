@@ -7,17 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.tisandg.americacup2019.Entities.Group;
+import com.example.tisandg.americacup2019.Entities.TeamGroup;
 import com.example.tisandg.americacup2019.R;
 
 import java.util.List;
 
 public class AdapterGroupsRecycler extends RecyclerView.Adapter<AdapterGroupsRecycler.ItemViewHolder> {
 
-    private List<Group> listMatches;
+    private List<TeamGroup> groupA;
+    private List<TeamGroup> groupB;
+    private List<TeamGroup> groupC;
 
-    public AdapterGroupsRecycler(List<Group> listData) {
-        this.listMatches = listData;
+    public AdapterGroupsRecycler(List<TeamGroup>listDataA, List<TeamGroup>listDataB, List<TeamGroup>listDataC) {
+        this.groupA = listDataA;
+        this.groupB = listDataB;
+        this.groupC = listDataC;
     }
 
     @NonNull
@@ -66,7 +70,7 @@ public class AdapterGroupsRecycler extends RecyclerView.Adapter<AdapterGroupsRec
 
     @Override
     public int getItemCount() {
-        return listMatches.size();
+        return groupA.size()+groupB.size()+groupC.size();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -106,5 +110,17 @@ public class AdapterGroupsRecycler extends RecyclerView.Adapter<AdapterGroupsRec
             PPD = view.findViewById(R.id.pp_team_d);
             PTD = view.findViewById(R.id.pt_team_d);
         }
+    }
+
+    public void setGroupA(List<TeamGroup> groupA) {
+        this.groupA = groupA;
+    }
+
+    public void setGroupB(List<TeamGroup> groupB) {
+        this.groupB = groupB;
+    }
+
+    public void setGroupC(List<TeamGroup> groupC) {
+        this.groupC = groupC;
     }
 }

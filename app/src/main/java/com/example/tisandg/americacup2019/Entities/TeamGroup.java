@@ -10,21 +10,22 @@ public class TeamGroup {
     @NonNull
     @PrimaryKey(autoGenerate = true)
     private int teamGroup_id;
-
-    private String teamGroup_posicion;
+    private String teamName;
+    private int teamGroup_rank;
     private int teamGroup_matches;
-    private int teamGroup_win;
-    private int teamGroup_draw;
-    private int teamGroup_lose;
+    private int teamGroup_won;
+    private int teamGroup_drawn;
+    private int teamGroup_lost;
     private int teamGroup_pts;
 
-    public TeamGroup(int teamGroup_id, String teamGroup_posicion, int teamGroup_matches, int teamGroup_win, int teamGroup_draw, int teamGroup_lose, int teamGroup_pts) {
+    public TeamGroup(int teamGroup_id, String teamName, int teamGroup_rank, int teamGroup_matches, int teamGroup_won, int teamGroup_drawn, int teamGroup_lost, int teamGroup_pts) {
         this.teamGroup_id = teamGroup_id;
-        this.teamGroup_posicion = teamGroup_posicion;
+        this.teamName = teamName;
+        this.teamGroup_rank = teamGroup_rank;
         this.teamGroup_matches = teamGroup_matches;
-        this.teamGroup_win = teamGroup_win;
-        this.teamGroup_draw = teamGroup_draw;
-        this.teamGroup_lose = teamGroup_lose;
+        this.teamGroup_won = teamGroup_won;
+        this.teamGroup_drawn = teamGroup_drawn;
+        this.teamGroup_lost = teamGroup_lost;
         this.teamGroup_pts = teamGroup_pts;
     }
 
@@ -36,12 +37,12 @@ public class TeamGroup {
         this.teamGroup_id = teamGroup_id;
     }
 
-    public String getTeamGroup_posicion() {
-        return teamGroup_posicion;
+    public int getTeamGroup_rank() {
+        return teamGroup_rank;
     }
 
-    public void setTeamGroup_posicion(String teamGroup_posicion) {
-        this.teamGroup_posicion = teamGroup_posicion;
+    public void setTeamGroup_rank(int teamGroup_rank) {
+        this.teamGroup_rank = teamGroup_rank;
     }
 
     public int getTeamGroup_matches() {
@@ -52,28 +53,28 @@ public class TeamGroup {
         this.teamGroup_matches = teamGroup_matches;
     }
 
-    public int getTeamGroup_win() {
-        return teamGroup_win;
+    public int getTeamGroup_won() {
+        return teamGroup_won;
     }
 
-    public void setTeamGroup_win(int teamGroup_win) {
-        this.teamGroup_win = teamGroup_win;
+    public void setTeamGroup_won(int teamGroup_won) {
+        this.teamGroup_won = teamGroup_won;
     }
 
-    public int getTeamGroup_draw() {
-        return teamGroup_draw;
+    public int getTeamGroup_drawn() {
+        return teamGroup_drawn;
     }
 
-    public void setTeamGroup_draw(int teamGroup_draw) {
-        this.teamGroup_draw = teamGroup_draw;
+    public void setTeamGroup_drawn(int teamGroup_drawn) {
+        this.teamGroup_drawn = teamGroup_drawn;
     }
 
-    public int getTeamGroup_lose() {
-        return teamGroup_lose;
+    public int getTeamGroup_lost() {
+        return teamGroup_lost;
     }
 
-    public void setTeamGroup_lose(int teamGroup_lose) {
-        this.teamGroup_lose = teamGroup_lose;
+    public void setTeamGroup_lost(int teamGroup_lost) {
+        this.teamGroup_lost = teamGroup_lost;
     }
 
     public int getTeamGroup_pts() {
@@ -82,5 +83,13 @@ public class TeamGroup {
 
     public void setTeamGroup_pts(int teamGroup_pts) {
         this.teamGroup_pts = teamGroup_pts;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 }

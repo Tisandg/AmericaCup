@@ -31,4 +31,6 @@ public class FavoritesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_favoritos, container, false);
     }
 
+    public void update(){}
+
 }

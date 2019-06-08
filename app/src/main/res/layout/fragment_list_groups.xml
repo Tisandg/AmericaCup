@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.MatchesFragment">
 
+    <ListView
+        android:id="@+id/list_view_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_groups"
         android:layout_width="match_parent"

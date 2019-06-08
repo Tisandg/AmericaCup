@@ -1,18 +1,20 @@
 package com.example.tisandg.americacup2019.Fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
-import com.example.tisandg.americacup2019.Entities.Group;
-import com.example.tisandg.americacup2019.Entities.TeamDetail;
+import com.example.tisandg.americacup2019.Database.DatabaseAmericaCupAccesor;
+import com.example.tisandg.americacup2019.Entities.Team;
+import com.example.tisandg.americacup2019.Entities.TeamGroup;
 import com.example.tisandg.americacup2019.R;
-import com.example.tisandg.americacup2019.Recycler.AdapterGroupsRecycler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +24,24 @@ import java.util.List;
  */
 public class ListGroupsFragment extends Fragment {
 
-    AdapterGroupsRecycler adaptador;
-    RecyclerView mRecyclerView;
-    List<Group> listData;
+    //AdapterGroupsRecycler adapter;
+    //RecyclerView mRecyclerView;
+    List<TeamGroup> GroupA, GroupB, GroupC;
     String TAG = "ListGroups";
+
+    GroupAdapter adapter;
+    private List<GroupWithTeams> groups;
+
+    //Items Layout
+    private ListView listViewGroups;
+
+    private final static int idGroupA = 1;
+    private final static int idGroupB = 2;
+    private final static int idGroupC = 3;
 
     public ListGroupsFragment() {
         // Required empty public constructor
+        this.groups = new ArrayList<GroupWithTeams>();
     }
 
     @Override
@@ -42,32 +55,160 @@ public class ListGroupsFragment extends Fragment {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_list_groups, container, false);
 
         //Para el RecyclerView
-        mRecyclerView = view.findViewById(R.id.recyclerView_groups);
+        /*mRecyclerView = view.findViewById(R.id.recyclerView_groups);
         LinearLayoutManager layout = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layout);
-        mRecyclerView.setHasFixedSize(true);
-        listData = fillGroups();
-        Log.d(TAG, "Numero de grupos: "+listData.size());
-        adaptador = new AdapterGroupsRecycler(listData);
-        mRecyclerView.setAdapter(adaptador);
+        mRecyclerView.setHasFixedSize(true);*/
+
+        getGroups(idGroupA);
+        getGroups(idGroupB);
+        getGroups(idGroupC);
+
+        GroupA = new ArrayList<TeamGroup>();
+        GroupB = new ArrayList<TeamGroup>();
+        GroupC = new ArrayList<TeamGroup>();
+
+        adapter = new GroupAdapter(getActivity(), groups);
+        listViewGroups = view.findViewById(R.id.list_view_groups);
+        listViewGroups.setAdapter(adapter);
+        //adapter = new AdapterGroupsRecycler(GroupA, GroupB, GroupC);
+        //mRecyclerView.setAdapter(adapter);
         return view;
     }
 
-    public List<Group> fillGroups(){
-        List<Group> list = new ArrayList<Group>();
-        int i = 0 ;
-        for(i = 0;i<3;i++){
-            Group group = new Group();
-            List<TeamDetail> teams = new ArrayList<TeamDetail>();
-            int j=0;
-            for(j = 0;j<4;j++){
-                TeamDetail team = new TeamDetail("Colombia",2,2,2,2,2);
-                teams.add(team);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    public void update(){
+        Log.d(TAG,"Actualizando fragment");
+        GroupA = new ArrayList<TeamGroup>();
+        GroupB = new ArrayList<TeamGroup>();
+        GroupC = new ArrayList<TeamGroup>();
+        getGroups(idGroupA);
+        getGroups(idGroupB);
+        getGroups(idGroupC);
+    }
+
+    public void getGroups(final int idGrupo) {
+        class GetGroups extends AsyncTask<Void, Void, List<TeamGroup>> {
+
+            @Override
+            protected List<TeamGroup> doInBackground(Void... voids) {
+                List<TeamGroup> group = DatabaseAmericaCupAccesor
+                        .getInstance(getActivity().getApplication()).teamGroupDAO().findByGroup(idGrupo);
+                Log.d(TAG,"teams in group["+idGrupo+"]: "+group.size());
+                return group;
             }
-            //group.setTeams(teams);
-            list.add(group);
+
+            @Override
+            protected void onPostExecute(List<TeamGroup> group) {
+                super.onPostExecute(group);
+                Log.d(TAG,"Actualizando adapter");
+                if(group.size() != 0){
+                    Log.d(TAG,"Adding teams from group "+idGrupo);
+                    switch (idGrupo){
+                        case idGroupA:
+                            for(TeamGroup t:group){
+                                GroupA.add(t);
+                            }
+                            adapter.setGroupA(GroupA);
+                            break;
+
+                        case idGroupB:
+                            for(TeamGroup t:group){
+                                GroupB.add(t);
+                            }
+                            adapter.setGroupB(GroupB);
+                            break;
+
+                        case idGroupC:
+                            for(TeamGroup t:group){
+                                GroupC.add(t);
+                            }
+                            adapter.setGroupC(GroupC);
+                            break;
+                    }
+                    adapter.notifyDataSetChanged();
+                }else{
+                    Log.d(TAG,"Set Deafult values");
+                    switch (idGrupo){
+                        case idGroupA:
+                            GroupA = new ArrayList<TeamGroup>();
+                            getTeamsFromGroup(idGroupA);
+                            break;
+
+                        case idGroupB:
+                            GroupB = new ArrayList<TeamGroup>();
+                            getTeamsFromGroup(idGroupB);
+                            break;
+
+                        case idGroupC:
+                            GroupC = new ArrayList<TeamGroup>();
+                            getTeamsFromGroup(idGroupC);
+                            break;
+                    }
+                }
+            }
         }
-        return list;
+        GetGroups get = new GetGroups();
+        get.execute();
+    }
+
+    /**
+     * Obtain teams from a group and define default value in their standing
+     * @param idGroup
+     */
+    public void getTeamsFromGroup(final int idGroup){
+        class GetTeams extends AsyncTask<Void, Void, List<Team>> {
+
+            @Override
+            protected List<Team> doInBackground(Void... voids) {
+                List<Team> group = DatabaseAmericaCupAccesor
+                        .getInstance(getActivity().getApplication()).teamDAO().findByGroup(idGroup);
+                Log.d(TAG,"teams of group["+idGroup+"]: "+group.size());
+                return group;
+            }
+
+            @Override
+            protected void onPostExecute(List<Team> group) {
+                super.onPostExecute(group);
+                Log.d(TAG,"Actualizando adapter");
+                if(group.size() != 0){
+                    List<TeamGroup> auxGroup = new ArrayList<>();
+                    for(Team t:group){
+                        TeamGroup teamGroup = new TeamGroup(idGroup,t.getTeam_name(),1,0,0,0,0,0);
+                        auxGroup.add(teamGroup);
+                    }
+                    switch (idGroup){
+                        case idGroupA:
+                            for(TeamGroup t:auxGroup){
+                                GroupA.add(t);
+                            }
+                            adapter.setGroupA(GroupA);
+                            break;
+
+                        case idGroupB:
+                            for(TeamGroup t:auxGroup){
+                                GroupB.add(t);
+                            }
+                            adapter.setGroupB(GroupB);
+                            break;
+
+                        case idGroupC:
+                            for(TeamGroup t:auxGroup){
+                                GroupC.add(t);
+                            }
+                            adapter.setGroupC(GroupC);
+                            break;
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+        GetTeams get = new GetTeams();
+        get.execute();
     }
 
 }
