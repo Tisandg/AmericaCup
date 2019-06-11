@@ -113,22 +113,25 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
         Log.d(TAG,"Fragment[1]: "+VPAdapter.getItem(1).toString());
     }
 
-
-
-    //Prepare the menu before display
+    //Create the options menu
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        //int idx = myListView.getSelectedItemPosition();
-        //If addingNew flag is set, user is adding a task so cancel option is displayed; otherwise, remove option is available
-        String removeTitle = getString(addingNew ? R.string.cancel : R.string.action_qr_code);
-        MenuItem camaraItem = menu.findItem(R.id.action_qr);
-        camaraItem.setTitle(removeTitle);
-        //Cancel option is displayed if user is adding a task and remove option is displayed if list has at least one element
-        camaraItem.setVisible(addingNew);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_principal, menu);
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_qr) {
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -138,14 +141,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
         menu.add(0, LECTURA_QR, Menu.NONE, R.string.action_qr_code);
     }
 
-    //Create the options menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_principal, menu);
-        return true;
-    }
+
 
     /**
      * Watch the MatchDAO which the user have choosed
@@ -218,21 +214,15 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                                 SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
                                 parser.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-                                SimpleDateFormat formatterDate = new SimpleDateFormat("EEEE, dd MMM", new Locale("es"));
-                                formatterDate.setTimeZone(TimeZone.getTimeZone("GMT-6"));
+                                SimpleDateFormat formatterDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale("es"));
+                                //SimpleDateFormat formatterDate = new SimpleDateFormat("EEEE, dd MMM", new Locale("es"));
+                                formatterDate.setTimeZone(TimeZone.getTimeZone("GMT-5"));
+                                Date dateParsed = parser.parse(dateTime);
+                                dateConverted = formatterDate.format(dateParsed);
 
                                 SimpleDateFormat formatterTime = new SimpleDateFormat("h:mm aa", new Locale("es"));
-                                formatterTime.setTimeZone(TimeZone.getTimeZone("GMT-6"));
-
-                                Date dateParsed = parser.parse(dateTime);
-                                dateFinal = dateParsed;
-                                dateConverted = formatterDate.format(dateParsed);
+                                formatterTime.setTimeZone(TimeZone.getTimeZone("GMT-5"));
                                 timeConverter = formatterTime.format(dateParsed);
-
-                                SimpleDateFormat formatterDateFinal = new SimpleDateFormat("EEEE, dd MMM", new Locale("es"));
-                                formatterDateFinal.setTimeZone(TimeZone.getTimeZone("GMT-6"));
-
-                                dateFinal = formatterDateFinal.parse(dateConverted);
 
                             }catch (Exception e){
                                 Log.d(TAG,"Excepcion al convertir date: "+e.getMessage());

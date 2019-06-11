@@ -18,8 +18,14 @@ import com.example.tisandg.americacup2019.Entities.Match;
 import com.example.tisandg.americacup2019.R;
 import com.example.tisandg.americacup2019.Recycler.AdapterRecycler;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -109,12 +115,50 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 Log.d(TAG,"Actualizando adapter");
                 listData.clear();
                 listData = matches;
+                ordenarPorFecha();
                 adapter.setListMatches(listData);
                 adapter.notifyDataSetChanged();
             }
         }
         GetMatchs getMatchs = new GetMatchs();
         getMatchs.execute();
+    }
+
+    public void ordenarPorFecha(){
+        List<Match> datos = new ArrayList<Match>();
+        List<Date> fechasSinOrdenar = new ArrayList<Date>();
+
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale("es"));
+        parser.setTimeZone(TimeZone.getTimeZone("GMT-5"));
+        int i = 0, j;
+        for (i = 0 ; i<listData.size();i++){
+            Match m = listData.get(i);
+            String fecha = m.getMatch_date()+" "+m.getMatch_hour();
+            try {
+                Date date = parser.parse(fecha);
+                fechasSinOrdenar.add(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        List<Date> fechasOrdenadas = fechasSinOrdenar;
+
+        //Order dates
+        Collections.sort(fechasOrdenadas);
+
+        SimpleDateFormat formatterDate = new SimpleDateFormat("EEEE, dd MMM", new Locale("es"));
+        formatterDate.setTimeZone(TimeZone.getTimeZone("GMT-5"));
+
+        for(i = 0 ; i<fechasOrdenadas.size() ; i++){
+            for(j = 0 ; j<fechasSinOrdenar.size() ; j++){
+                if(fechasOrdenadas.get(i).compareTo(fechasSinOrdenar.get(j)) == 0){
+                    String date = formatterDate.format(fechasSinOrdenar.get(j));
+                    listData.get(j).setMatch_date(date);
+                    datos.add(listData.get(j));
+                }
+            }
+        }
+        listData = datos;
     }
 
     public void update(){
