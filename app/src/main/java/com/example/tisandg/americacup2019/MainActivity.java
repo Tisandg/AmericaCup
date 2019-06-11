@@ -9,11 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -133,13 +131,13 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /*@Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle(R.string.menu_title);
         menu.add(0, LECTURA_QR, Menu.NONE, R.string.action_qr_code);
-    }
+    }*/
 
 
 

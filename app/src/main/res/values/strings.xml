@@ -41,6 +41,13 @@
     <string name="letter_standing_drawn">D</string>
     <string name="letter_standing_lost">L</string>
     <string name="letter_standing_pts">Pts</string>
+    <string name="statistics">Estadisticas</string>
+    <string name="ball_possession">Posesion del balon</string>
+    <string name="precision">Precision</string>
+    <string name="passes">Pases</string>
+    <string name="faults">Faltas</string>
+    <string name="yellow_cards">Tarjetas amarillas</string>
+    <string name="red_cards">Tarjetas rojas</string>
 
 
 </resources>
