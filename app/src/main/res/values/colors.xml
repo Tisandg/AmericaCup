@@ -5,4 +5,6 @@
     <color name="colorAccent">#F2B705</color>
     <color name="cardview_background">#022D66</color>
     <color name="background_second">#506602</color>
+
+    <color name="text_toolbar">#FFF</color>
 </resources>

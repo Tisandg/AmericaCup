@@ -30,17 +30,20 @@ import java.util.TimeZone;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MatchesFragment extends Fragment implements View.OnClickListener{
+public class MatchesFragment extends Fragment{
 
     AdapterRecycler adapter;
     RecyclerView mRecyclerView;
     List<Match> listData;
     ComunicationToActivity callback;
     private String TAG = "MatchesFragment";
+    private int equipoSeleccionado;
 
     public MatchesFragment() {
         // Required empty public constructor
         listData = new ArrayList<Match>();
+        //0 Show all matches
+        equipoSeleccionado = 0;
     }
 
     public ComunicationToActivity getCallback() {
@@ -83,6 +86,11 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
 
         //listData = fillMatches();
         adapter = new AdapterRecycler(getActivity(),listData);
+        if(equipoSeleccionado == 0){
+            adapter.setListener(true);
+        }else{
+            adapter.setListener(false);
+        }
 
         getMatchs();
 
@@ -103,8 +111,12 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
 
             @Override
             protected List<Match> doInBackground(Void... voids) {
-                List<Match> matches = DatabaseAmericaCupAccesor
-                        .getInstance(getActivity().getApplication()).matchDAO().loadAll();
+                List<Match> matches;
+                if(equipoSeleccionado == 0){
+                    matches = DatabaseAmericaCupAccesor.getInstance(getActivity().getApplication()).matchDAO().loadAll();
+                }else{
+                    matches = DatabaseAmericaCupAccesor.getInstance(getActivity().getApplication()).matchDAO().findByTeam(equipoSeleccionado);
+                }
                 Log.d(TAG,"Numero matches en fragment: "+matches.size());
                 return matches;
             }
@@ -175,9 +187,12 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         getMatchs();
     }
 
-    @Override
-    public void onClick(View v) {
-        //Intent goTo
+    public int getEquipoSeleccionado() {
+        return equipoSeleccionado;
+    }
+
+    public void setEquipoSeleccionado(int equipoSeleccionado) {
+        this.equipoSeleccionado = equipoSeleccionado;
     }
 }
 

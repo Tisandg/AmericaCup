@@ -55,6 +55,12 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        getMatch();
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         finish();
@@ -67,7 +73,7 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void getMatch(){
-        class SaveMatches extends AsyncTask<Void, Void, Boolean> {
+        class getMatch extends AsyncTask<Void, Void, Boolean> {
             @Override
             protected Boolean doInBackground(Void... voids) {
                 //adding to database
@@ -86,8 +92,8 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
             }
         }
 
-        SaveMatches save = new SaveMatches();
-        save.execute();
+        getMatch get = new getMatch();
+        get.execute();
     }
 
     @Override
@@ -122,13 +128,18 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
 
     public void goTeamDeatil(int team){
         int id = 0;
+        //String name;
         if(team == 0){
             id = matchCurrent.getMatch_id_teamA();
+            //name = matchCurrent.getTeamA();
         }else{
             id = matchCurrent.getMatch_id_teamB();
+            //name = matchCurrent.getTeamB();
         }
         Intent intent = new Intent(MatchActivity.this, TeamDeatilActivity.class);
         intent.putExtra(getString(R.string.field_id_team), id);
+        intent.putExtra(getString(R.string.field_id_group), matchCurrent.getGroup_id());
+        //intent.putExtra(getString(R.string.field_name_team), name);
         startActivity(intent);
     }
 }

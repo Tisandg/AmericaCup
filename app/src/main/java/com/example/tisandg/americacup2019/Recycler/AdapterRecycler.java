@@ -17,6 +17,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
 
     private List<Match> listMatches;
     private Context context;
+    private boolean listener = true;
 
     private static View.OnClickListener mOnItemClickListener;
 
@@ -63,7 +64,10 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
             score = view.findViewById(R.id.score);
             status = view.findViewById(R.id.status);
             itemView.setTag(this);
-            itemView.setOnClickListener(mOnItemClickListener);
+            if(listener){
+                itemView.setOnClickListener(mOnItemClickListener);
+            }
+
         }
     }
 
@@ -73,6 +77,14 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
 
     public void setListMatches(List<Match> listMatches) {
         this.listMatches = listMatches;
+    }
+
+    public boolean isListener() {
+        return listener;
+    }
+
+    public void setListener(boolean listener) {
+        this.listener = listener;
     }
 }
 

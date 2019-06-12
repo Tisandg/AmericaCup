@@ -31,4 +31,7 @@ public interface MatchDAO {
 
     @Query("SELECT * FROM Match WHERE match_id = :id")
     public Match findById(int id);
+
+    @Query("SELECT * FROM Match WHERE match_id_teamA = :idTeam OR match_id_teamB = :idTeam")
+    public List<Match> findByTeam(int idTeam);
 }

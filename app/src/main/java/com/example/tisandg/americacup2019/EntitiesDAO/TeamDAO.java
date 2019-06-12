@@ -31,4 +31,7 @@ public interface TeamDAO {
 
     @Query("SELECT * FROM Team WHERE group_id = :id")
     public List<Team> findByGroup(int id);
+
+    @Query("SELECT * FROM Team WHERE team_id = :id")
+    public Team findById(int id);
 }

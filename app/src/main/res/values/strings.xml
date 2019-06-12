@@ -50,6 +50,10 @@
     <string name="red_cards">Tarjetas rojas</string>
     <string name="title_reader_QR">Lector codigos QR</string>
     <string name="field_id_team">idTeam</string>
+    <string name="field_id_group">idGroup</string>
+    <string name="field_name_team">nameTeam</string>
+    <string name="msg_favorite_added">Añadido a favoritos</string>
+    <string name="msg_favorite_deleted">Eliminado de favoritos</string>
 
 
 </resources>

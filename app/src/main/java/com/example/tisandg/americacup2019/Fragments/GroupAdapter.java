@@ -157,7 +157,4 @@ public class GroupAdapter extends BaseAdapter {
     public void setGroupC(List<TeamGroup> group) {
         this.groups.add(2, new GroupWithTeams("Group C", group));
     }
-    public void setGroupD(List<TeamGroup> group) {
-        this.groups.add(3, new GroupWithTeams("Group D", group));
-    }
 }

@@ -32,6 +32,13 @@ public class ListGroupsFragment extends Fragment {
     GroupAdapter adapter;
     private List<GroupWithTeams> groups;
 
+    /**0 todos los grupos
+     * 1 grupo A
+     * 2 grupo B
+     * 3 grupo C
+     */
+    private int grupoSeleccionado;
+
     //Items Layout
     private ListView listViewGroups;
 
@@ -41,7 +48,6 @@ public class ListGroupsFragment extends Fragment {
 
     public ListGroupsFragment() {
         // Required empty public constructor
-        this.groups = new ArrayList<GroupWithTeams>();
     }
 
     @Override
@@ -54,25 +60,26 @@ public class ListGroupsFragment extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_list_groups, container, false);
 
-        //Para el RecyclerView
-        /*mRecyclerView = view.findViewById(R.id.recyclerView_groups);
-        LinearLayoutManager layout = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(layout);
-        mRecyclerView.setHasFixedSize(true);*/
-
-        getGroups(idGroupA);
-        getGroups(idGroupB);
-        getGroups(idGroupC);
-
+        groups = new ArrayList<GroupWithTeams>();
         GroupA = new ArrayList<TeamGroup>();
         GroupB = new ArrayList<TeamGroup>();
         GroupC = new ArrayList<TeamGroup>();
 
+        if(grupoSeleccionado == 0){
+            getGroups(idGroupA);
+            getGroups(idGroupB);
+            getGroups(idGroupC);
+        }else{
+            switch (grupoSeleccionado){
+                case 1: getGroups(idGroupA);    break;
+                case 2: getGroups(idGroupB);    break;
+                case 3: getGroups(idGroupC);    break;
+            }
+        }
+
         adapter = new GroupAdapter(getActivity(), groups);
         listViewGroups = view.findViewById(R.id.list_view_groups);
         listViewGroups.setAdapter(adapter);
-        //adapter = new AdapterGroupsRecycler(GroupA, GroupB, GroupC);
-        //mRecyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -83,12 +90,31 @@ public class ListGroupsFragment extends Fragment {
 
     public void update(){
         Log.d(TAG,"Actualizando fragment");
-        GroupA = new ArrayList<TeamGroup>();
-        GroupB = new ArrayList<TeamGroup>();
-        GroupC = new ArrayList<TeamGroup>();
-        getGroups(idGroupA);
-        getGroups(idGroupB);
-        getGroups(idGroupC);
+        if(grupoSeleccionado == 0){
+            GroupA = new ArrayList<TeamGroup>();
+            GroupB = new ArrayList<TeamGroup>();
+            GroupC = new ArrayList<TeamGroup>();
+            getGroups(idGroupA);
+            getGroups(idGroupB);
+            getGroups(idGroupC);
+        }else{
+            switch (grupoSeleccionado){
+                case 1:
+                    GroupA = new ArrayList<TeamGroup>();
+                    getGroups(idGroupA);
+                    break;
+
+                case 2:
+                    GroupB = new ArrayList<TeamGroup>();
+                    getGroups(idGroupB);
+                    break;
+
+                case 3:
+                    GroupC = new ArrayList<TeamGroup>();
+                    getGroups(idGroupC);
+                    break;
+            }
+        }
     }
 
     public void getGroups(final int idGrupo) {
@@ -200,6 +226,7 @@ public class ListGroupsFragment extends Fragment {
                             for(TeamGroup t:auxGroup){
                                 GroupC.add(t);
                             }
+                            Log.d(TAG,"Añdiendo grupo C. Num: "+GroupC.size());
                             adapter.setGroupC(GroupC);
                             break;
                     }
@@ -211,4 +238,11 @@ public class ListGroupsFragment extends Fragment {
         get.execute();
     }
 
+    public int getGrupoSeleccionado() {
+        return grupoSeleccionado;
+    }
+
+    public void setGrupoSeleccionado(int grupoSeleccionado) {
+        this.grupoSeleccionado = grupoSeleccionado;
+    }
 }
