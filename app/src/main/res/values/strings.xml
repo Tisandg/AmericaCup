@@ -48,6 +48,8 @@
     <string name="faults">Faltas</string>
     <string name="yellow_cards">Tarjetas amarillas</string>
     <string name="red_cards">Tarjetas rojas</string>
+    <string name="title_reader_QR">Lector codigos QR</string>
+    <string name="field_id_team">idTeam</string>
 
 
 </resources>

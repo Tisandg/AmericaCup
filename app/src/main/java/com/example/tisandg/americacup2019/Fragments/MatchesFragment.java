@@ -113,7 +113,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
             protected void onPostExecute(List<Match> matches) {
                 super.onPostExecute(matches);
                 Log.d(TAG,"Actualizando adapter");
-                listData.clear();
+                listData = new ArrayList<Match>();
                 listData = matches;
                 ordenarPorFecha();
                 adapter.setListMatches(listData);
@@ -141,7 +141,9 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 e.printStackTrace();
             }
         }
+
         List<Date> fechasOrdenadas = fechasSinOrdenar;
+        Log.d(TAG,"Fechas sin ordenar :"+fechasSinOrdenar.size());
 
         //Order dates
         Collections.sort(fechasOrdenadas);
@@ -149,16 +151,23 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         SimpleDateFormat formatterDate = new SimpleDateFormat("EEEE, dd MMM", new Locale("es"));
         formatterDate.setTimeZone(TimeZone.getTimeZone("GMT-5"));
 
+        ArrayList<Integer> listSelected = new ArrayList<Integer>();
+
         for(i = 0 ; i<fechasOrdenadas.size() ; i++){
             for(j = 0 ; j<fechasSinOrdenar.size() ; j++){
                 if(fechasOrdenadas.get(i).compareTo(fechasSinOrdenar.get(j)) == 0){
-                    String date = formatterDate.format(fechasSinOrdenar.get(j));
-                    listData.get(j).setMatch_date(date);
-                    datos.add(listData.get(j));
+                    if(!listSelected.contains(j)){
+                        String date = formatterDate.format(fechasSinOrdenar.get(j));
+                        listData.get(j).setMatch_date(date);
+                        datos.add(listData.get(j));
+                        listSelected.add(j);
+                        break;
+                    }
                 }
             }
         }
         listData = datos;
+        Log.d(TAG,"Lista datos: "+listData.size());
     }
 
     public void update(){

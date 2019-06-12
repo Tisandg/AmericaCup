@@ -37,4 +37,7 @@ dependencies {
 
     //Para las peticiones HTTP
     implementation 'com.android.volley:volley:1.1.1'
+
+    //Codigo QR
+    implementation 'me.dm7.barcodescanner:zxing:1.8.4'
 }

@@ -13,8 +13,8 @@ public class Match {
     @PrimaryKey(autoGenerate = true)
     private int match_id;
 
-    private int match_teamA;
-    private int match_teamB;
+    private int match_id_teamA;
+    private int match_id_teamB;
     private String teamA;
     private String teamB;
     private String score;
@@ -25,11 +25,11 @@ public class Match {
     private String match_stadium;
     private int group_id;
 
-    public Match(int match_id, int match_teamA, String teamA, int match_teamB, String teamB,
+    public Match(int match_id, int match_id_teamA, String teamA, int match_id_teamB, String teamB,
                  String match_date, String match_hour, String match_stadium, int group_id) {
         this.match_id = match_id;
-        this.match_teamA = match_teamA;
-        this.match_teamB = match_teamB;
+        this.match_id_teamA = match_id_teamA;
+        this.match_id_teamB = match_id_teamB;
         this.match_date = match_date;
         this.match_hour = match_hour;
         this.match_stadium = match_stadium;
@@ -46,20 +46,20 @@ public class Match {
         this.match_id = match_id;
     }
 
-    public int getMatch_teamA() {
-        return match_teamA;
+    public int getMatch_id_teamA() {
+        return match_id_teamA;
     }
 
-    public void setMatch_teamA(int match_teamA) {
-        this.match_teamA = match_teamA;
+    public void setMatch_id_teamA(int match_id_teamA) {
+        this.match_id_teamA = match_id_teamA;
     }
 
-    public int getMatch_teamB() {
-        return match_teamB;
+    public int getMatch_id_teamB() {
+        return match_id_teamB;
     }
 
-    public void setMatch_teamB(int match_teamB) {
-        this.match_teamB = match_teamB;
+    public void setMatch_id_teamB(int match_id_teamB) {
+        this.match_id_teamB = match_id_teamB;
     }
 
     public String getMatch_date() {

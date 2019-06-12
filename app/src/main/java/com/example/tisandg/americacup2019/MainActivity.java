@@ -1,17 +1,19 @@
 package com.example.tisandg.americacup2019;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -44,16 +46,19 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity implements MatchesFragment.ComunicationToActivity {
 
     //Defines the remove option for the context menu
-    private static final int LECTURA_QR = Menu.FIRST;
-    private boolean addingNew = true;
     private String TAG = "MainActivity";
     //Donde se van colocando almacenando las peticiones
     private RequestQueue cola;
     private ArrayList<Match> matches;
 
+    private ImageView img;
+
     private ViewPagerAdapter VPAdapter;
     private boolean agregadosA= false, agregadosB = false, agregadosC = false;
     private boolean groupA= false, groupB = false, groupC = false;
+
+    private static final int CODIGO_QR = 1;
+    private final int MY_PERMISSIONS_REQUEST_CAMERA = 2;
 
     private static int idGroupA = 1;
     private static int idGroupB = 2;
@@ -74,6 +79,13 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
 
         matches = new ArrayList<Match>();
 
+        img = findViewById(R.id.icon_qrcode);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                readQRCode();
+            }
+        });
         //CHECK INTERNET CONNECTION
 
         //Get information about fixtures of all groups
@@ -99,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
         fragments.add(groups);
         fragments.add(favorites);
 
+        comprobarPermisoCamara();
 
         VPAdapter = new ViewPagerAdapter(fragments, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -106,39 +119,62 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
 
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-
-        Log.d(TAG,"Fragment[0]: "+VPAdapter.getItem(0).toString());
-        Log.d(TAG,"Fragment[1]: "+VPAdapter.getItem(1).toString());
     }
 
     //Create the options menu
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
+        // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_principal, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_qr) {
-
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_qr:
+                readQRCode();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /*@Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle(R.string.menu_title);
-        menu.add(0, LECTURA_QR, Menu.NONE, R.string.action_qr_code);
     }*/
 
+    private void readQRCode() {
+        Intent goReader = new Intent(MainActivity.this, LectorQRActivity.class);
+        startActivityForResult(goReader, CODIGO_QR);
+    }
+
+
+    public void comprobarPermisoCamara() {
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+            //Permisos concedidos
+            //leerTag();
+        }else{
+            Log.d(TAG,"Solicitando permisos de acceso a la camara");
+            // No explanation needed, we can request the permission.
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    MY_PERMISSIONS_REQUEST_CAMERA);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissiones[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //leerTag();
+                    Toast.makeText(this, "Permisos otorgados", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "No se puede ejecutar actividad", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Permiso de acceso a la camara ha sido denegada");
+                }
+                break;
+        }
+    }
 
 
     /**
@@ -180,7 +216,6 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                         int numFixtures = fixtures.length();
                         int i = 0;
                         for(i = 0; i<numFixtures; i++){
-                            Log.d(TAG,"Respuesta fixture: "+fixtures.get(i).toString());
                             JSONObject fixture = (JSONObject) fixtures.get(i);
 
                             //Obtain data from fixture
@@ -189,6 +224,8 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                             int teamAid = fixture.getInt("home_id");
                             String teamB = fixture.getString("away_name");
                             int teamBid = fixture.getInt("away_id");
+
+                            Log.d(TAG,"Fixture["+i+"]: "+teamA+" VS "+teamB);
 
                             if(!teams.containsKey(teamAid)){
                                 teams.put(teamAid, teamA);
@@ -262,6 +299,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                         //Register fixtures in BD
                         saveMatches(matchesGroup);
                     }else{
+                        Log.d(TAG,"No fixtures found");
                         Toast.makeText(MainActivity.this, "No fixtures found", Toast.LENGTH_SHORT).show();
                     }
                     
@@ -309,6 +347,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
             @Override
             public void onResponse(JSONObject response){
                 try {
+                    Log.d(TAG,"Response group information");
                     Boolean success = response.getBoolean("success");
                     if(success) {
                         JSONObject objData = response.getJSONObject("data");
@@ -318,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                         int numTeams = teams.length();
                         int i = 0;
                         for (i = 0; i < numTeams; i++) {
-                            Log.d(TAG, "Respuesta standing: " + teams.get(i).toString());
+                            //Log.d(TAG, "Respuesta standing: " + teams.get(i).toString());
                             JSONObject teamInfo = (JSONObject) teams.get(i);
 
                             //Obtain data of team
@@ -331,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                             int won = teamInfo.getInt("won");
 
                             TeamGroup teamGroup = new TeamGroup(idGroupLocal,name, rank, matches, won, drawn, lost, points);
-
+                            Log.d(TAG,"GroupInfo: "+name+" in "+rank);
                             teamGroupArray.add(teamGroup);
                         }
                         switch (idGroupLocal){
@@ -342,6 +381,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                         //Register in BD
                         saveStanding(teamGroupArray);
                     }else{
+                        Log.d(TAG,"There are not information about groups");
                         //fillStandingDefault(idGroupLocal);
                         Toast.makeText(MainActivity.this, "There are not information about group standings", Toast.LENGTH_SHORT).show();
                     }
@@ -381,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                 super.onPostExecute(aVoid);
                 //Save in preferences
                 teamsSaved();
-                Log.d(TAG, "Teams saved: "+teams.size());
+                Log.d(TAG, "Teams ["+teams.size()+"] saved ");
             }
         }
         SaveTeams save = new SaveTeams();
@@ -405,9 +445,13 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Log.d(TAG, "Matches saved: "+matchesGroup.size());
+                Log.d(TAG,"Matches agregados");
+                for(Match match: matchesGroup){
+                    Log.d(TAG,"Match "+match.getTeamA()+" VS "+match.getTeamB());
+                }
                 if(agregadosA && agregadosB && agregadosC){
                     VPAdapter.updateFragment(0);
+                    VPAdapter.updateFragment(1);
                     agregadosA = agregadosB = agregadosC = false;
                 }
 
@@ -431,7 +475,10 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Log.d(TAG, "Teams standing ared saved: "+group.size());
+                Log.d(TAG,"Teams standing agregados");
+                for(TeamGroup teamGroup: group){
+                    Log.d(TAG,"Team "+teamGroup.getTeamName()+" group: "+teamGroup.getTeamGroup_id());
+                }
                 if(groupA && groupB && groupC){
                     VPAdapter.updateFragment(1);
                     groupA = groupB = groupC = false;
@@ -441,6 +488,21 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
         }
         SaveStanding save = new SaveStanding();
         save.execute();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        //Revisamos que actividad dio resultado
+        switch (requestCode){
+            case CODIGO_QR:
+                if(resultCode == RESULT_OK){
+                    String codigoQR = data.getStringExtra("Data");
+                    Toast.makeText(this, "Codigo TAG leido :"+codigoQR, Toast.LENGTH_SHORT).show();
+                }else{
+                    Log.d(TAG, "No se recibio codigo qr de la actividad");
+                }
+                break;
+        }
     }
 
 }
