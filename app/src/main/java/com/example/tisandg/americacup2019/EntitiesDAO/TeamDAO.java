@@ -34,4 +34,7 @@ public interface TeamDAO {
 
     @Query("SELECT * FROM Team WHERE team_id = :id")
     public Team findById(int id);
+
+    @Query("SELECT * FROM Team WHERE favorite = :value")
+    public List<Team> findFavorities(boolean value);
 }
