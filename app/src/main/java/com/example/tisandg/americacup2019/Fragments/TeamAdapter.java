@@ -12,10 +12,12 @@ import com.example.tisandg.americacup2019.R;
 
 import java.util.List;
 
+
 public class TeamAdapter extends BaseAdapter {
 
     private final Context mContext;
     private List<Team> favorities;
+    private static View.OnClickListener mOnItemClickListener;
 
     public TeamAdapter(List<Team> favorities, Context context) {
         this.favorities = favorities;
@@ -38,18 +40,18 @@ public class TeamAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View view, ViewGroup parent) {
 
-        if (convertView == null) {
+        if (view == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            convertView = layoutInflater.inflate(R.layout.item_team, null);
+            view = layoutInflater.inflate(R.layout.item_team, null);
         }
 
-        final TextView nameTeam = convertView.findViewById(R.id.name_team);
+        final TextView nameTeam = view.findViewById(R.id.name_team);
 
         nameTeam.setText(favorities.get(position).getTeam_name());
-
-        return convertView;
+        //view.setOnClickListener(mOnItemClickListener);
+        return view;
     }
 
     public List<Team> getFavorities() {
@@ -58,5 +60,9 @@ public class TeamAdapter extends BaseAdapter {
 
     public void setFavorities(List<Team> favorities) {
         this.favorities = favorities;
+    }
+
+    public void setOnItemClickListener(View.OnClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
     }
 }

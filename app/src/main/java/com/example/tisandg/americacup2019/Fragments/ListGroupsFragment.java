@@ -24,13 +24,11 @@ import java.util.List;
  */
 public class ListGroupsFragment extends Fragment {
 
-    //AdapterGroupsRecycler adapter;
-    //RecyclerView mRecyclerView;
     List<TeamGroup> GroupA, GroupB, GroupC;
     String TAG = "ListGroups";
 
     GroupAdapter adapter;
-    private List<GroupWithTeams> groups;
+    private GroupWithTeams[] groups = new GroupWithTeams[3];
 
     /**0 todos los grupos
      * 1 grupo A
@@ -48,6 +46,7 @@ public class ListGroupsFragment extends Fragment {
 
     public ListGroupsFragment() {
         // Required empty public constructor
+        grupoSeleccionado = 0;
     }
 
     @Override
@@ -60,7 +59,6 @@ public class ListGroupsFragment extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_list_groups, container, false);
 
-        groups = new ArrayList<GroupWithTeams>();
         GroupA = new ArrayList<TeamGroup>();
         GroupB = new ArrayList<TeamGroup>();
         GroupC = new ArrayList<TeamGroup>();
@@ -89,6 +87,9 @@ public class ListGroupsFragment extends Fragment {
     }
 
     public void update(){
+        if(!isAdded()){
+            return;
+        }
         Log.d(TAG,"Actualizando fragment");
         if(grupoSeleccionado == 0){
             GroupA = new ArrayList<TeamGroup>();

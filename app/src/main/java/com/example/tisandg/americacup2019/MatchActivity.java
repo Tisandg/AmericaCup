@@ -16,7 +16,7 @@ import com.example.tisandg.americacup2019.Entities.Match;
 
 public class MatchActivity extends AppCompatActivity implements View.OnClickListener{
 
-    String TAG = "MainActivity";
+    String TAG = "Match";
     private int idMatch;
     private Match matchCurrent;
 
@@ -32,6 +32,7 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
 
+        Log.d(TAG,"OnCreate");
         nameA = findViewById(R.id.nameA);
         nameB = findViewById(R.id.nameB);
         score = findViewById(R.id.score);
@@ -44,9 +45,7 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
         imgQR.setOnClickListener(this);
 
         idMatch = getIntent().getIntExtra(getString(R.string.id_match),0);
-        if(idMatch != 0){
-            getMatch();
-        }
+
 
         Log.d(TAG,"Creado activity");
         Toolbar toolbar = findViewById(R.id.match_toolbar);
@@ -57,7 +56,10 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        getMatch();
+        Log.d(TAG,"OnResume");
+        if(idMatch != 0){
+            getMatch();
+        }
     }
 
     @Override
@@ -78,6 +80,7 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
             protected Boolean doInBackground(Void... voids) {
                 //adding to database
                 matchCurrent = DatabaseAmericaCupAccesor.getInstance(getApplication()).matchDAO().findById(idMatch);
+                Log.d(TAG,"Obtienendo match con id: "+idMatch);
                 return true;
             }
 
@@ -89,6 +92,7 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
                 nameA.setText(matchCurrent.getTeamA());
                 nameB.setText(matchCurrent.getTeamB());
                 status.setText(matchCurrent.getStatus());
+                Log.d(TAG,"Valores colocados");
             }
         }
 
@@ -131,9 +135,11 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
         //String name;
         if(team == 0){
             id = matchCurrent.getMatch_id_teamA();
+            Log.d(TAG,"Ver equipo["+matchCurrent.getTeamA()+"]");
             //name = matchCurrent.getTeamA();
         }else{
             id = matchCurrent.getMatch_id_teamB();
+            Log.d(TAG,"Ver equipo["+matchCurrent.getTeamB()+"]");
             //name = matchCurrent.getTeamB();
         }
         Intent intent = new Intent(MatchActivity.this, TeamDeatilActivity.class);

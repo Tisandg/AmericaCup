@@ -15,12 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".TeamDeatilActivity"
+        <activity android:name=".PlayerActivity"
+            android:label="@string/title_player_activity"
+            android:parentActivityName=".MainActivity"></activity>
+
+        <activity
+            android:name=".TeamDeatilActivity"
             android:parentActivityName=".MatchActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".LectorQRActivity"
             android:label="@string/title_reader_QR"
@@ -29,8 +31,7 @@
             android:name=".MatchActivity"
             android:label="@string/app_name"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

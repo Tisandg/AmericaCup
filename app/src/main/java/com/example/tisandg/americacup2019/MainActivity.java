@@ -43,7 +43,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-public class MainActivity extends AppCompatActivity implements MatchesFragment.ComunicationToActivity {
+public class MainActivity extends AppCompatActivity implements MatchesFragment.ComunicationToActivity,
+    FavoritesFragment.favoriteToActivityInterface{
 
     //Defines the remove option for the context menu
     private String TAG = "MainActivity";
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
 
     private static final int CODIGO_QR = 1;
     private final int MY_PERMISSIONS_REQUEST_CAMERA = 2;
+    private final int FAVORITE_TEAM = 3;
 
     private static int idGroupA = 1;
     private static int idGroupB = 2;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
         });
         //CHECK INTERNET CONNECTION
 
+
         //Get information about fixtures of all groups
         getFixturesGroup(getString(R.string.groupA), idGroupA);
         getFixturesGroup(getString(R.string.groupB), idGroupB);
@@ -105,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
         matchesFragment = new MatchesFragment();
         //Send the reference of this activity because this implement the interface
         matchesFragment.setCallback(this);
+        matchesFragment.setContext(this);
         ListGroupsFragment groups = new ListGroupsFragment();
         groups.setGrupoSeleccionado(0);
         FavoritesFragment favorites = new FavoritesFragment();
@@ -470,6 +474,13 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
         save.execute();
     }
 
+    public void goToTeamDetail(int idTeam, int idGroup){
+        Intent intent = new Intent(this, TeamDeatilActivity.class);
+        intent.putExtra(getString(R.string.field_id_team), idTeam);
+        intent.putExtra(getString(R.string.field_id_group),idGroup);
+        startActivityForResult(intent, FAVORITE_TEAM);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         //Revisamos que actividad dio resultado
@@ -482,7 +493,16 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                     Log.d(TAG, "No se recibio codigo qr de la actividad");
                 }
                 break;
+            case FAVORITE_TEAM:
+                if(resultCode == RESULT_OK){
+                    VPAdapter.updateFragment(2);
+                }
+                break;
         }
     }
 
+    @Override
+    public void watchTeam(int id) {
+        Toast.makeText(this, "idTeam seleccinoado: "+id, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -14,6 +14,7 @@ import com.example.tisandg.americacup2019.R;
 import java.util.List;
 
 class ViewHolder{
+
     TextView nameGroup;
     TextView nameTeamA, matchesTeamA, wonTeamA, drawnTeamA, lostTeamA, ptsTeamA;
     TextView nameTeamB, matchesTeamB, wonTeamB, drawnTeamB, lostTeamB, ptsTeamB;
@@ -24,22 +25,24 @@ class ViewHolder{
 public class GroupAdapter extends BaseAdapter {
 
     private Activity activity;
-    private List<GroupWithTeams> groups;
+    //Only 3 groups
+    private GroupWithTeams[] groups = new GroupWithTeams[3];
+    //private List<GroupWithTeams> groups;
     private String TAG = "GroupAdapter";
 
-    public GroupAdapter(Activity activity, List<GroupWithTeams> groups) {
+    public GroupAdapter(Activity activity, GroupWithTeams[] groups) {
         this.activity = activity;
         this.groups = groups;
     }
 
     @Override
     public int getCount() {
-        return groups.size();
+        return groups.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return groups.get(position);
+        return groups[position];
     }
 
     @Override
@@ -94,67 +97,73 @@ public class GroupAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.nameGroup.setText(groups.get(position).getName());
-
-        TeamGroup team1, team2, team3, team4;
-        Log.d(TAG,"Size of group "+groups.get(position).getGroup().size());
-        team1 = groups.get(position).getGroup().get(0);
-        team2 = groups.get(position).getGroup().get(1);
-
-        //First team
-        viewHolder.nameTeamA.setText(team1.getTeamName());
-        viewHolder.matchesTeamA.setText(""+team1.getTeamGroup_matches());
-        viewHolder.wonTeamA.setText(""+team1.getTeamGroup_won());
-        viewHolder.drawnTeamA.setText(""+team1.getTeamGroup_drawn());
-        viewHolder.lostTeamA.setText(""+team1.getTeamGroup_lost());
-        viewHolder.ptsTeamA.setText(""+team1.getTeamGroup_pts());
-
-        //Second team
-        viewHolder.nameTeamB.setText(""+team2.getTeamName());
-        viewHolder.matchesTeamB.setText(""+team2.getTeamGroup_matches());
-        viewHolder.wonTeamB.setText(""+team2.getTeamGroup_won());
-        viewHolder.drawnTeamB.setText(""+team2.getTeamGroup_drawn());
-        viewHolder.lostTeamB.setText(""+team2.getTeamGroup_lost());
-        viewHolder.ptsTeamB.setText(""+team2.getTeamGroup_pts());
-        try {
-            team3 = groups.get(position).getGroup().get(2);
-            //Third team
-            viewHolder.nameTeamC.setText("" + team3.getTeamName());
-            viewHolder.matchesTeamC.setText("" + team3.getTeamGroup_matches());
-            viewHolder.wonTeamC.setText("" + team3.getTeamGroup_won());
-            viewHolder.drawnTeamC.setText("" + team3.getTeamGroup_drawn());
-            viewHolder.lostTeamC.setText("" + team3.getTeamGroup_lost());
-            viewHolder.ptsTeamC.setText("" + team3.getTeamGroup_pts());
-        }catch (Exception e){
-            Log.d(TAG,"Team 3 no found");
-            viewHolder.nameTeamC.setText("Paraguay");
-        }
-
         try{
-            team4 = groups.get(position).getGroup().get(3);
-            //Fourth team
-            viewHolder.nameTeamD.setText(""+team4.getTeamName());
-            viewHolder.matchesTeamD.setText(""+team4.getTeamGroup_matches());
-            viewHolder.wonTeamD.setText(""+team4.getTeamGroup_won());
-            viewHolder.drawnTeamD.setText(""+team4.getTeamGroup_drawn());
-            viewHolder.lostTeamD.setText(""+team4.getTeamGroup_lost());
-            viewHolder.ptsTeamD.setText(""+team4.getTeamGroup_pts());
-        }catch (Exception e){
-            Log.d(TAG,"Team 4 no found");
-            viewHolder.nameTeamD.setText("Qatar");
+            viewHolder.nameGroup.setText(groups[position].getName());
+
+            TeamGroup team1, team2, team3, team4;
+            Log.d(TAG,"Size of group "+groups[position].getGroup().size());
+            team1 = groups[position].getGroup().get(0);
+            team2 = groups[position].getGroup().get(1);
+
+            //First team
+            viewHolder.nameTeamA.setText(team1.getTeamName());
+            viewHolder.matchesTeamA.setText(""+team1.getTeamGroup_matches());
+            viewHolder.wonTeamA.setText(""+team1.getTeamGroup_won());
+            viewHolder.drawnTeamA.setText(""+team1.getTeamGroup_drawn());
+            viewHolder.lostTeamA.setText(""+team1.getTeamGroup_lost());
+            viewHolder.ptsTeamA.setText(""+team1.getTeamGroup_pts());
+
+            //Second team
+            viewHolder.nameTeamB.setText(""+team2.getTeamName());
+            viewHolder.matchesTeamB.setText(""+team2.getTeamGroup_matches());
+            viewHolder.wonTeamB.setText(""+team2.getTeamGroup_won());
+            viewHolder.drawnTeamB.setText(""+team2.getTeamGroup_drawn());
+            viewHolder.lostTeamB.setText(""+team2.getTeamGroup_lost());
+            viewHolder.ptsTeamB.setText(""+team2.getTeamGroup_pts());
+            try {
+                team3 = groups[position].getGroup().get(2);
+                //Third team
+                viewHolder.nameTeamC.setText("" + team3.getTeamName());
+                viewHolder.matchesTeamC.setText("" + team3.getTeamGroup_matches());
+                viewHolder.wonTeamC.setText("" + team3.getTeamGroup_won());
+                viewHolder.drawnTeamC.setText("" + team3.getTeamGroup_drawn());
+                viewHolder.lostTeamC.setText("" + team3.getTeamGroup_lost());
+                viewHolder.ptsTeamC.setText("" + team3.getTeamGroup_pts());
+            }catch (Exception e){
+                Log.d(TAG,"Team 3 no found");
+                viewHolder.nameTeamC.setText("Paraguay");
+            }
+
+            try{
+                team4 = groups[position].getGroup().get(3);
+                //Fourth team
+                viewHolder.nameTeamD.setText(""+team4.getTeamName());
+                viewHolder.matchesTeamD.setText(""+team4.getTeamGroup_matches());
+                viewHolder.wonTeamD.setText(""+team4.getTeamGroup_won());
+                viewHolder.drawnTeamD.setText(""+team4.getTeamGroup_drawn());
+                viewHolder.lostTeamD.setText(""+team4.getTeamGroup_lost());
+                viewHolder.ptsTeamD.setText(""+team4.getTeamGroup_pts());
+            }catch (Exception e){
+                Log.d(TAG,"Team 4 no found");
+                viewHolder.nameTeamD.setText("Qatar");
+            }
+        }catch (NullPointerException e){
+            Log.d(TAG,"Array de grupos vacio");
         }
+
 
         return view;
     }
 
 
     public void setGroupA(List<TeamGroup> group) {
-        this.groups.add(0, new GroupWithTeams("Group A", group));
+        this.groups[0] = new GroupWithTeams("Group A", group);
     }
+
     public void setGroupB(List<TeamGroup> group) {
-        this.groups.add(1, new GroupWithTeams("Group B", group));
+        this.groups[1] = new GroupWithTeams("Group B", group);
     }
     public void setGroupC(List<TeamGroup> group) {
-        this.groups.add(2, new GroupWithTeams("Group C", group));
+        this.groups[2] = new GroupWithTeams("Group C", group);
     }
 }

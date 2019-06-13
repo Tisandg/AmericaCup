@@ -67,7 +67,6 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
             if(listener){
                 itemView.setOnClickListener(mOnItemClickListener);
             }
-
         }
     }
 

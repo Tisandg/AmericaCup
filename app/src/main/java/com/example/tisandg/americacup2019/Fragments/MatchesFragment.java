@@ -1,6 +1,7 @@
 package com.example.tisandg.americacup2019.Fragments;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,16 +39,13 @@ public class MatchesFragment extends Fragment{
     ComunicationToActivity callback;
     private String TAG = "MatchesFragment";
     private int equipoSeleccionado;
+    private Context context;
 
     public MatchesFragment() {
         // Required empty public constructor
         listData = new ArrayList<Match>();
         //0 Show all matches
         equipoSeleccionado = 0;
-    }
-
-    public ComunicationToActivity getCallback() {
-        return callback;
     }
 
     public void setCallback(ComunicationToActivity callback) {
@@ -91,9 +89,7 @@ public class MatchesFragment extends Fragment{
         }else{
             adapter.setListener(false);
         }
-
-        getMatchs();
-
+        //getMatchs();
         return view;
     }
 
@@ -113,9 +109,9 @@ public class MatchesFragment extends Fragment{
             protected List<Match> doInBackground(Void... voids) {
                 List<Match> matches;
                 if(equipoSeleccionado == 0){
-                    matches = DatabaseAmericaCupAccesor.getInstance(getActivity().getApplication()).matchDAO().loadAll();
+                    matches = DatabaseAmericaCupAccesor.getInstance(context).matchDAO().loadAll();
                 }else{
-                    matches = DatabaseAmericaCupAccesor.getInstance(getActivity().getApplication()).matchDAO().findByTeam(equipoSeleccionado);
+                    matches = DatabaseAmericaCupAccesor.getInstance(context).matchDAO().findByTeam(equipoSeleccionado);
                 }
                 Log.d(TAG,"Numero matches en fragment: "+matches.size());
                 return matches;
@@ -182,7 +178,16 @@ public class MatchesFragment extends Fragment{
         Log.d(TAG,"Lista datos: "+listData.size());
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getMatchs();
+    }
+
     public void update(){
+        if(!isAdded()){
+            return;
+        }
         Log.d(TAG,"Actualizando fragment");
         getMatchs();
     }
@@ -193,6 +198,16 @@ public class MatchesFragment extends Fragment{
 
     public void setEquipoSeleccionado(int equipoSeleccionado) {
         this.equipoSeleccionado = equipoSeleccionado;
+    }
+
+    @Nullable
+    @Override
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }
 
