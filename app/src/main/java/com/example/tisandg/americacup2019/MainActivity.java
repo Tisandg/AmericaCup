@@ -487,8 +487,8 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
         switch (requestCode){
             case CODIGO_QR:
                 if(resultCode == RESULT_OK){
-                    String codigoQR = data.getStringExtra("Data");
-                    Toast.makeText(this, "Codigo TAG leido :"+codigoQR, Toast.LENGTH_SHORT).show();
+                    String URLPlayerResource = data.getStringExtra("Data");
+                    goToPlayer(URLPlayerResource);
                 }else{
                     Log.d(TAG, "No se recibio codigo qr de la actividad");
                 }
@@ -499,6 +499,12 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                 }
                 break;
         }
+    }
+
+    private void goToPlayer(String urlPlayerResource) {
+        Intent goPlayer = new Intent(this, PlayerActivity.class);
+        goPlayer.putExtra("url", urlPlayerResource);
+        startActivity(goPlayer);
     }
 
     @Override

@@ -14,20 +14,24 @@ public class Player {
     private String player_name;
     private String player_image;
     private String player_position;
-    private String player_description;
+    private String player_nacionality;
     private String player_birthdate;
     private float player_height;
     private float player_weight;
 
-    public Player(int player_id, String player_name, String player_image, String player_position, String player_description, String player_birthdate, float player_height, float player_weight) {
+    public Player(int player_id, String player_name, String player_image, String player_position, String player_nacionality, String player_birthdate, float player_height, float player_weight) {
         this.player_id = player_id;
         this.player_name = player_name;
         this.player_image = player_image;
         this.player_position = player_position;
-        this.player_description = player_description;
+        this.player_nacionality = player_nacionality;
         this.player_birthdate = player_birthdate;
         this.player_height = player_height;
         this.player_weight = player_weight;
+    }
+
+    public Player() {
+
     }
 
     public int getPlayer_id() {
@@ -62,12 +66,12 @@ public class Player {
         this.player_position = player_position;
     }
 
-    public String getPlayer_description() {
-        return player_description;
+    public String getPlayer_nacionality() {
+        return player_nacionality;
     }
 
-    public void setPlayer_description(String player_description) {
-        this.player_description = player_description;
+    public void setPlayer_nacionality(String player_nacionality) {
+        this.player_nacionality = player_nacionality;
     }
 
     public String getPlayer_birthdate() {
@@ -92,5 +96,9 @@ public class Player {
 
     public void setPlayer_weight(float player_weight) {
         this.player_weight = player_weight;
+    }
+
+    public void setPlayer_lastname(String lastname) {
+        this.player_name = this.player_name + " "+ lastname;
     }
 }

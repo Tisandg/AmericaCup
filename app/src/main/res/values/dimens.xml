@@ -8,4 +8,9 @@
     <dimen name="cardview_match_height">100dp</dimen>
     <dimen name="title_in_activity">24dp</dimen>
     <dimen name="nameTeam_favorities">20dp</dimen>
+
+    <!-- player -->
+    <dimen name="size_img_player">200dp</dimen>
+    <dimen name="name_player">30dp</dimen>
+    <dimen name="fields_player">20dp</dimen>
 </resources>
