@@ -1,9 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Api keys Livescore API Soccer-->
-    <string name="api_key">CRboJSdbyUOdxjyI</string>
-    <string name="api_secret">QHClTh9OozvlE0RhS3GBWTNuOBHlVf4L</string>
-
     <string name="app_name">America Cup 2019</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
@@ -14,57 +10,57 @@
     <string name="favorites">Favorites</string>
     <string name="groupListing">Groups</string>
 
-    <string name="action_qr_code">Codigo QR</string>
-    <string name="menu_title">titulo menu</string>
-    <string name="cancel">Cancelar</string>
+    <string name="action_qr_code">QR Code</string>
+    <string name="menu_title">Menu title</string>
+    <string name="cancel">Cancel</string>
     <string name="tab_title_matches">Matches</string>
     <string name="tab_title_groups">Groups</string>
     <string name="tab_title_favorites">Favorites</string>
 
     <!-- Match states -->
-    <string name="NOT_STARTED">No iniciado</string>
-    <string name="IN_PLAY">iniciado</string>
-    <string name="HALF_TIME_BREAK">Medio tiempo</string>
-    <string name="ADDED_TIME">Tiempo de adicion</string>
-    <string name="FINISHED">Finalizado</string>
-    <string name="INSUFFICIENT_DATA">Datos insuficientes</string>
+    <string name="NOT_STARTED">Not started</string>
+    <string name="IN_PLAY">Started</string>
+    <string name="HALF_TIME_BREAK">halftime</string>
+    <string name="ADDED_TIME">Addition time</string>
+    <string name="FINISHED">Finished</string>
+    <string name="INSUFFICIENT_DATA">Insufficient data</string>
 
     <!-- ID Groups -->
     <string name="groupA">962</string>
     <string name="groupB">961</string>
     <string name="groupC">960</string>
     <string name="id_match">idMatch</string>
+
+    <!-- Shared Preferences -->
     <string name="shared_preferences_teams">dataTeams</string>
     <string name="shared_preferences_teams_saved">teamSaved</string>
+
     <string name="letter_standing_matches">M</string>
     <string name="letter_standing_won">W</string>
     <string name="letter_standing_drawn">D</string>
     <string name="letter_standing_lost">L</string>
     <string name="letter_standing_pts">Pts</string>
-    <string name="statistics">Estadisticas</string>
-    <string name="ball_possession">Posesion del balon</string>
+    <string name="statistics">Statistics</string>
+    <string name="ball_possession">Possession</string>
     <string name="precision">Precision</string>
-    <string name="passes">Pases</string>
-    <string name="faults">Faltas</string>
-    <string name="yellow_cards">Tarjetas amarillas</string>
-    <string name="red_cards">Tarjetas rojas</string>
-    <string name="title_reader_QR">Lector codigos QR</string>
+    <string name="passes">passes</string>
+    <string name="faults">faults</string>
+    <string name="yellow_cards">Yellos cards</string>
+    <string name="red_cards">Red cards</string>
+    <string name="title_reader_QR">QR Code Reader</string>
     <string name="field_id_team">idTeam</string>
     <string name="field_id_group">idGroup</string>
     <string name="field_name_team">nameTeam</string>
-    <string name="msg_favorite_added">Añadido a favoritos</string>
-    <string name="msg_favorite_deleted">Eliminado de favoritos</string>
-    <string name="without_favorities">No tienes equipos seleccionados como favoritos</string>
+    <string name="msg_favorite_added">Added to favoritos</string>
+    <string name="msg_favorite_deleted">Deleted of favorities</string>
+    <string name="without_favorities">You do not have favorite teams</string>
     <string name="title_player_activity">Player soccer</string>
     <string name="title_fragment_favorities">Favorities</string>
     <string name="title_fragment_groups">Groups</string>
     <string name="title_fragment_matches">Matches</string>
-
     <string name="name_group_a">Group A</string>
     <string name="name_group_b">Group B</string>
-    <string name="name_group_c">Group C</string>
     <string name="title_table_teams">Teams</string>
 
     <string name="locale">en</string>
-
 </resources>

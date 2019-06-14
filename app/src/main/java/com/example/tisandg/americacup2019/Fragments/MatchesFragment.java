@@ -136,7 +136,7 @@ public class MatchesFragment extends Fragment{
         List<Match> datos = new ArrayList<Match>();
         List<Date> fechasSinOrdenar = new ArrayList<Date>();
 
-        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale("es"));
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale(getString(R.string.locale)));
         parser.setTimeZone(TimeZone.getTimeZone("GMT-5"));
         int i = 0, j;
         for (i = 0 ; i<listData.size();i++){
@@ -156,7 +156,7 @@ public class MatchesFragment extends Fragment{
         //Order dates
         Collections.sort(fechasOrdenadas);
 
-        SimpleDateFormat formatterDate = new SimpleDateFormat("EEEE, dd MMM", new Locale("es"));
+        SimpleDateFormat formatterDate = new SimpleDateFormat("EEEE, dd MMM", new Locale(getString(R.string.locale)));
         formatterDate.setTimeZone(TimeZone.getTimeZone("GMT-5"));
 
         ArrayList<Integer> listSelected = new ArrayList<Integer>();

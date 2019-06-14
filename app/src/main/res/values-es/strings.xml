@@ -1,25 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Api keys Livescore API Soccer-->
-    <string name="api_key">CRboJSdbyUOdxjyI</string>
-    <string name="api_secret">QHClTh9OozvlE0RhS3GBWTNuOBHlVf4L</string>
-
-    <string name="app_name">America Cup 2019</string>
+    <string name="app_name">Copa America 2019</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="matches">Matches</string>
-    <string name="favorites">Favorites</string>
-    <string name="groupListing">Groups</string>
+    <string name="matches">Partidos</string>
+    <string name="favorites">Favoritos</string>
+    <string name="groupListing">Grupos</string>
 
     <string name="action_qr_code">Codigo QR</string>
     <string name="menu_title">titulo menu</string>
     <string name="cancel">Cancelar</string>
-    <string name="tab_title_matches">Matches</string>
-    <string name="tab_title_groups">Groups</string>
-    <string name="tab_title_favorites">Favorites</string>
+    <string name="tab_title_matches">Partidos</string>
+    <string name="tab_title_groups">Grupos</string>
+    <string name="tab_title_favorites">Favoritos</string>
 
     <!-- Match states -->
     <string name="NOT_STARTED">No iniciado</string>
@@ -36,10 +32,10 @@
     <string name="id_match">idMatch</string>
     <string name="shared_preferences_teams">dataTeams</string>
     <string name="shared_preferences_teams_saved">teamSaved</string>
-    <string name="letter_standing_matches">M</string>
-    <string name="letter_standing_won">W</string>
-    <string name="letter_standing_drawn">D</string>
-    <string name="letter_standing_lost">L</string>
+    <string name="letter_standing_matches">PJ</string>
+    <string name="letter_standing_won">PG</string>
+    <string name="letter_standing_drawn">PE</string>
+    <string name="letter_standing_lost">PP</string>
     <string name="letter_standing_pts">Pts</string>
     <string name="statistics">Estadisticas</string>
     <string name="ball_possession">Posesion del balon</string>
@@ -55,16 +51,16 @@
     <string name="msg_favorite_added">Añadido a favoritos</string>
     <string name="msg_favorite_deleted">Eliminado de favoritos</string>
     <string name="without_favorities">No tienes equipos seleccionados como favoritos</string>
-    <string name="title_player_activity">Player soccer</string>
-    <string name="title_fragment_favorities">Favorities</string>
-    <string name="title_fragment_groups">Groups</string>
-    <string name="title_fragment_matches">Matches</string>
+    <string name="title_player_activity">Jugador</string>
+    <string name="title_fragment_favorities">Favoritos</string>
+    <string name="title_fragment_groups">Grupos</string>
+    <string name="title_fragment_matches">Partidos</string>
 
-    <string name="name_group_a">Group A</string>
-    <string name="name_group_b">Group B</string>
-    <string name="name_group_c">Group C</string>
-    <string name="title_table_teams">Teams</string>
+    <string name="name_group_a">Grupo A</string>
+    <string name="name_group_b">Grupo B</string>
+    <string name="name_group_c">Grupo C</string>
 
-    <string name="locale">en</string>
+    <string name="title_table_teams">Equipos</string>
 
+    <string name="locale">es</string>
 </resources>

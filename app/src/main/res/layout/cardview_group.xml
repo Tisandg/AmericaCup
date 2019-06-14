@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="4"
-                android:text="Equipos"/>
+                android:text="@string/title_table_teams"/>
 
             <TextView
                 android:layout_height="wrap_content"

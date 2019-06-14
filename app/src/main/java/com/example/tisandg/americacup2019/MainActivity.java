@@ -235,13 +235,13 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
                                 SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
                                 parser.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-                                SimpleDateFormat formatterDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale("es"));
+                                SimpleDateFormat formatterDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale(getString(R.string.locale)));
                                 //SimpleDateFormat formatterDate = new SimpleDateFormat("EEEE, dd MMM", new Locale("es"));
                                 formatterDate.setTimeZone(TimeZone.getTimeZone("GMT-5"));
                                 Date dateParsed = parser.parse(dateTime);
                                 dateConverted = formatterDate.format(dateParsed);
 
-                                SimpleDateFormat formatterTime = new SimpleDateFormat("h:mm aa", new Locale("es"));
+                                SimpleDateFormat formatterTime = new SimpleDateFormat("h:mm aa", new Locale(getString(R.string.locale)));
                                 formatterTime.setTimeZone(TimeZone.getTimeZone("GMT-5"));
                                 timeConverter = formatterTime.format(dateParsed);
 

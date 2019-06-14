@@ -157,13 +157,13 @@ public class GroupAdapter extends BaseAdapter {
 
 
     public void setGroupA(List<TeamGroup> group) {
-        this.groups[0] = new GroupWithTeams("Group A", group);
+        this.groups[0] = new GroupWithTeams(activity.getString(R.string.name_group_a), group);
     }
 
     public void setGroupB(List<TeamGroup> group) {
-        this.groups[1] = new GroupWithTeams("Group B", group);
+        this.groups[1] = new GroupWithTeams(activity.getString(R.string.name_group_b), group);
     }
     public void setGroupC(List<TeamGroup> group) {
-        this.groups[2] = new GroupWithTeams("Group C", group);
+        this.groups[2] = new GroupWithTeams(activity.getString(R.string.name_group_c), group);
     }
 }
