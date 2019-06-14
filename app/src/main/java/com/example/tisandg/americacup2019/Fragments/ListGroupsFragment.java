@@ -1,5 +1,6 @@
 package com.example.tisandg.americacup2019.Fragments;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +27,7 @@ public class ListGroupsFragment extends Fragment {
 
     List<TeamGroup> GroupA, GroupB, GroupC;
     String TAG = "ListGroups";
+    private Context mContext;
 
     GroupAdapter adapter;
     private GroupWithTeams[] groups = new GroupWithTeams[3];
@@ -51,7 +53,7 @@ public class ListGroupsFragment extends Fragment {
 
     @Override
     public String toString() {
-        return "Groups";
+        return mContext.getString(R.string.title_fragment_groups);
     }
 
     @Override
@@ -245,5 +247,9 @@ public class ListGroupsFragment extends Fragment {
 
     public void setGrupoSeleccionado(int grupoSeleccionado) {
         this.grupoSeleccionado = grupoSeleccionado;
+    }
+
+    public void setContext(Context mainActivity) {
+        this.mContext = mainActivity;
     }
 }

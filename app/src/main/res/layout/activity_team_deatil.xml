@@ -35,13 +35,11 @@
 
                 <ImageView
                     android:id="@+id/img_shield_team"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:minHeight="?actionBarSize"
-                    android:padding="10dp"
-                    android:src="@drawable/shield"/>
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/shield"/>
 
                 <TextView
                     android:id="@+id/name_team"

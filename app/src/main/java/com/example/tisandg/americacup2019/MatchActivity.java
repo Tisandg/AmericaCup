@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.tisandg.americacup2019.Database.DatabaseAmericaCupAccesor;
 import com.example.tisandg.americacup2019.Entities.Match;
+import com.example.tisandg.americacup2019.Recycler.AdapterRecycler;
 
 public class MatchActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -23,6 +24,7 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
     //Items of Layout
     private TextView nameA,nameB, score, status;
     private ImageView imgShieldA, imgShieldB;
+    private ImageView shieldA2, shieldB2;
     private ImageView imgQR;
 
     private static final int CODIGO_QR = 1;
@@ -39,10 +41,15 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
         status = findViewById(R.id.status);
         imgShieldA = findViewById(R.id.img_shield_team_a);
         imgShieldB = findViewById(R.id.img_shield_team_b);
-        imgQR = findViewById(R.id.icon_qrcode);
+
+        shieldA2 = findViewById(R.id.img_shield_team_a_2);
+        shieldB2 = findViewById(R.id.img_shield_team_b_2);
+
+        //imgQR = findViewById(R.id.icon_qrcode);
+
         imgShieldA.setOnClickListener(this);
         imgShieldB.setOnClickListener(this);
-        imgQR.setOnClickListener(this);
+        //imgQR.setOnClickListener(this);
 
         idMatch = getIntent().getIntExtra(getString(R.string.id_match),0);
 
@@ -92,6 +99,13 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
                 nameA.setText(matchCurrent.getTeamA());
                 nameB.setText(matchCurrent.getTeamB());
                 status.setText(matchCurrent.getStatus());
+
+                int drawableTeamA = AdapterRecycler.drawable(matchCurrent.getTeamA());
+                int drawableTeamB = AdapterRecycler.drawable(matchCurrent.getTeamB());
+                imgShieldA.setBackground(getDrawable(drawableTeamA));
+                imgShieldB.setBackground(getDrawable(drawableTeamB));
+                shieldA2.setBackground(getDrawable(drawableTeamA));
+                shieldB2.setBackground(getDrawable(drawableTeamB));
                 Log.d(TAG,"Valores colocados");
             }
         }

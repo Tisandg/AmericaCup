@@ -34,6 +34,7 @@ public class TeamDeatilActivity extends AppCompatActivity implements View.OnClic
     private ImageButton btnBack, btnFavorite;
     private ImageView image;
     private TextView txtName;
+    private ImageView imgShield;
     private LinearLayout container;
 
     List<Match> listData;
@@ -73,19 +74,12 @@ public class TeamDeatilActivity extends AppCompatActivity implements View.OnClic
         image = findViewById(R.id.img_shield_team);
         txtName = findViewById(R.id.name_team);
         container = findViewById(R.id.contenedorTeamDetail);
+        imgShield = findViewById(R.id.img_shield_team);
 
         btnBack.setOnClickListener(this);
         btnFavorite.setOnClickListener(this);
 
         listData = new ArrayList<Match>();
-
-        //List<Fragment> fragments = new ArrayList<Fragment>();
-        /*matchesFragment = new MatchesFragment();
-        matchesFragment.setEquipoSeleccionado(idTeam);
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.contenedorTeamDetail, matchesFragment);
-        ft.commit();*/
 
         //Para el RecyclerView
         mRecyclerView = findViewById(R.id.recyclerView_matches_team);
@@ -250,7 +244,9 @@ public class TeamDeatilActivity extends AppCompatActivity implements View.OnClic
             @Override
             protected void onPostExecute(Boolean bol) {
                 super.onPostExecute(bol);
-                txtName.setText(currentTeam.getTeam_name());
+                String name = currentTeam.getTeam_name();
+                txtName.setText(name);
+                imgShield.setBackground(getDrawable(AdapterRecycler.drawable(name)));
                 changeStar();
             }
         }

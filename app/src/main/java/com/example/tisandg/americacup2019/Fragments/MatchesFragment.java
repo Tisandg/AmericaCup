@@ -70,7 +70,7 @@ public class MatchesFragment extends Fragment{
 
     @Override
     public String toString() {
-        return "Matches";
+        return context.getString(R.string.title_fragment_matches);
     }
 
     @Override

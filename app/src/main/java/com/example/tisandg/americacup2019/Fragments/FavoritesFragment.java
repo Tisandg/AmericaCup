@@ -1,6 +1,6 @@
 package com.example.tisandg.americacup2019.Fragments;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,13 +13,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tisandg.americacup2019.Database.DatabaseAmericaCupAccesor;
 import com.example.tisandg.americacup2019.Entities.Team;
 import com.example.tisandg.americacup2019.MainActivity;
 import com.example.tisandg.americacup2019.R;
-import com.example.tisandg.americacup2019.TeamDeatilActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +29,10 @@ public class FavoritesFragment extends Fragment {
 
     private String TAG = "FavoritiesFragment";
     private List<Team> favorites;
+    private Context mContext;
 
     //Items Layout
     private TextView txtMsg;
-
-    private int RESULT_OK = -1;
-    private int RESULT_CANCELED = 0;
 
     private GridView teamsGridView;
     private TeamAdapter teamAdapter;
@@ -52,13 +48,17 @@ public class FavoritesFragment extends Fragment {
         this.mOnItemClickListener = callback;
     }
 
+    public void setContext(Context mainActivity) {
+        this.mContext = (Context) mainActivity;
+    }
+
     public interface favoriteToActivityInterface {
         void watchTeam(int id);
     }
 
     @Override
     public String toString() {
-        return "Favorities";
+        return mContext.getString(R.string.title_fragment_favorities);
     }
 
     @Override
@@ -118,28 +118,6 @@ public class FavoritesFragment extends Fragment {
         }
         GetFavorites get = new GetFavorites();
         get.execute();
-    }
-
-    public void goToTeamDetail(int positionFavorite){
-        int id = favorites.get(positionFavorite).getTeam_id();
-        int idGroup = favorites.get(positionFavorite).getGroup_id();
-        Intent intent = new Intent(getActivity(), TeamDeatilActivity.class);
-        intent.putExtra(getString(R.string.field_id_team), id);
-        intent.putExtra(getString(R.string.field_id_group),idGroup);
-        startActivityForResult(intent, FAVORITE_TEAM);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getActivity(), "recibido", Toast.LENGTH_SHORT).show();
-        if(requestCode == FAVORITE_TEAM){
-            if (resultCode == RESULT_OK) {
-                //Actualizar lista;
-                Toast.makeText(getActivity(), "Favoritos cambiados", Toast.LENGTH_SHORT).show();
-                getFavoritesTeam();
-            }
-        }
     }
 
     public void update( ){

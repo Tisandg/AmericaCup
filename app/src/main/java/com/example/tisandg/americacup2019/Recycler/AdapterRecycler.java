@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tisandg.americacup2019.Entities.Match;
@@ -46,6 +47,11 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
             view.score.setText(listMatches.get(i).getMatch_date());
             view.status.setText(listMatches.get(i).getMatch_hour());
         }
+        int drawableA = drawable(listMatches.get(i).getTeamA());
+        int drawableB = drawable(listMatches.get(i).getTeamB());
+
+        view.imgTeamA.setBackground(context.getDrawable(drawableA));
+        view.imgTeamB.setBackground(context.getDrawable(drawableB));
     }
 
     @Override
@@ -56,6 +62,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTeamA, nameTeamB, score, status;
+        ImageView imgTeamA, imgTeamB;
 
         public ItemViewHolder(@NonNull View view) {
             super(view);
@@ -63,6 +70,10 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
             nameTeamB = view.findViewById(R.id.nameB);
             score = view.findViewById(R.id.score);
             status = view.findViewById(R.id.status);
+
+            imgTeamA = view.findViewById(R.id.flag_team_a);
+            imgTeamB = view.findViewById(R.id.flag_team_b);
+
             itemView.setTag(this);
             if(listener){
                 itemView.setOnClickListener(mOnItemClickListener);
@@ -84,6 +95,49 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ItemVi
 
     public void setListener(boolean listener) {
         this.listener = listener;
+    }
+
+    public static int drawable(String nameTeam){
+        int drawable = 0;
+        switch (nameTeam){
+            case "Peru":
+                drawable = R.drawable.peru;
+                break;
+            case "Brazil":
+                drawable = R.drawable.brazil;
+                break;
+            case "Bolivia":
+                drawable = R.drawable.bolivia;
+                break;
+            case "Venezuela":
+                drawable = R.drawable.venezuela;
+                break;
+            case "Qatar":
+                drawable = R.drawable.qatar;
+                break;
+            case "Argentina":
+                drawable = R.drawable.argentina;
+                break;
+            case "Colombia":
+                drawable = R.drawable.colombia;
+                break;
+            case "Paraguay":
+                drawable = R.drawable.paraguay;
+                break;
+            case "Uruguay":
+                drawable = R.drawable.uruguay;
+                break;
+            case "Japan":
+                drawable = R.drawable.japan;
+                break;
+            case "Chile":
+                drawable = R.drawable.chile;
+                break;
+            case "Ecuador":
+                drawable = R.drawable.ecuador;
+                break;
+        }
+        return drawable;
     }
 }
 

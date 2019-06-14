@@ -28,16 +28,6 @@
                 android:text="@string/app_name"
                 android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
-            <ImageView
-                android:id="@+id/icon_qrcode"
-                android:layout_marginRight="8dp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignBottom="@id/title"
-                android:layout_alignTop="@id/title"
-                android:src="@drawable/ic_action_camera"/>
-
         </RelativeLayout>
 
         <android.support.v7.widget.Toolbar
@@ -156,7 +146,7 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/shield_team_a_2"
+            android:id="@+id/img_shield_team_a_2"
             android:background="@drawable/shield"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -172,7 +162,7 @@
             android:layout_height="50dp" />
 
         <ImageView
-            android:id="@+id/shield_team_b_2"
+            android:id="@+id/img_shield_team_b_2"
             android:background="@drawable/shield"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

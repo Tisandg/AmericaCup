@@ -56,5 +56,8 @@
     <string name="msg_favorite_deleted">Eliminado de favoritos</string>
     <string name="without_favorities">No tienes equipos seleccionados como favoritos</string>
     <string name="title_player_activity">Player soccer</string>
+    <string name="title_fragment_favorities">Favorities</string>
+    <string name="title_fragment_groups">Groups</string>
+    <string name="title_fragment_matches">Matches</string>
 
 </resources>

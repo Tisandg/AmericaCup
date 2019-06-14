@@ -29,6 +29,7 @@
                 android:text="team A" />
 
             <ImageView
+                android:id="@+id/flag_team_a"
                 android:background="@drawable/shield"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
@@ -71,6 +72,7 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/flag_team_b"
                 android:background="@drawable/shield"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"

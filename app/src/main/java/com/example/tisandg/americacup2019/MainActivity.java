@@ -111,7 +111,9 @@ public class MainActivity extends AppCompatActivity implements MatchesFragment.C
         matchesFragment.setContext(this);
         ListGroupsFragment groups = new ListGroupsFragment();
         groups.setGrupoSeleccionado(0);
+        groups.setContext(this);
         FavoritesFragment favorites = new FavoritesFragment();
+        favorites.setContext(this);
         fragments.add(matchesFragment);
         fragments.add(groups);
         fragments.add(favorites);

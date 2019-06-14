@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tisandg.americacup2019.Entities.Team;
 import com.example.tisandg.americacup2019.R;
+import com.example.tisandg.americacup2019.Recycler.AdapterRecycler;
 
 import java.util.List;
 
@@ -47,10 +49,12 @@ public class TeamAdapter extends BaseAdapter {
             view = layoutInflater.inflate(R.layout.item_team, null);
         }
 
-        final TextView nameTeam = view.findViewById(R.id.name_team);
+        TextView nameTeam = view.findViewById(R.id.name_team);
+        ImageView shield = view.findViewById(R.id.shiel_team);
 
+        String name = favorities.get(position).getTeam_name();
         nameTeam.setText(favorities.get(position).getTeam_name());
-        //view.setOnClickListener(mOnItemClickListener);
+        shield.setBackground(mContext.getDrawable(AdapterRecycler.drawable(name)) );
         return view;
     }
 
